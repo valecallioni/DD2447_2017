@@ -7,7 +7,7 @@ estimateLikelihood = function(beta, y){
   # set.seed(12254)
   
   T = dim(y)[1]
-  N = 1000
+  N = 100
   phi = 0.98
   sigma = 0.16
   l = 0 
@@ -24,15 +24,14 @@ estimateLikelihood = function(beta, y){
   
   # Supposing to have y vector of length T, the data, the weight is given by 
   # the probability of each datapoint given the sample
-  w[1,] = pnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
+  w[1,] = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
   l = l + log(sum(w[1,])) - log(N)
   
   # At each time, first sample N points, then compute the weights, that give
   # us the estimate of the target probability distribution
   for (t in 2:T){
     x[t,] = sapply(phi*x[t-1,], normalSamplingX, sigma = sigma)
-    w[t,] = pnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
-    w[t,] = w[t,]*w[t-1,]
+    w[t,] = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
     l = l + log(sum(w[t,])) - log(N)
   }
   
@@ -49,7 +48,7 @@ estimateLikelihoodResampl = function(beta, y){
   # set.seed(12254)
   
   T = dim(y)[1]
-  N = 10000
+  N = 100
   phi = 0.98
   sigma = 0.16
   l = 0
@@ -71,7 +70,7 @@ estimateLikelihoodResampl = function(beta, y){
   # the probability of that datapoint given the sample
   x[1,] = sapply(phi*x0, normalSamplingX, sigma=sigma)
   
-  w[1,] = pnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
+  w[1,] = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
   
   # Normalize the weights
   W[1,] = w[1,]/sum(w[1,])
@@ -88,7 +87,7 @@ estimateLikelihoodResampl = function(beta, y){
   for (t in 2:T){
     
     x[t,] = sapply(phi*x[t-1,], normalSamplingX, sigma = sigma)
-    w[t,] = pnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
+    w[t,] = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
     W[t,] = w[t,]/sum(w[t,])
     
     # Resampling step
