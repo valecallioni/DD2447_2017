@@ -14,14 +14,11 @@ import numpy as np
 
 class Graph:
     # Attributes of the graph
-    V = 6
+    V = 10
     degree = 3
-
     A = np.zeros(shape=(V,V)) # Adjacency matrix
-
-    G = np.empty(shape=(V,V), dtype=double) # Matrix representing the actual graph
+    G = np.empty(shape=(V,V)) # Matrix representing the actual graph
     G.fill(3)
-
     alphas = np.empty(shape=V)
 
     def __init__(self):
@@ -38,21 +35,23 @@ class Graph:
     # Select 3 random neighbors, in such a way that we obtain a plausible network
     # (i.e. A must be symmetric)
     def setNeighbors(self):
-        for i in range(self.V):
-            for j in range(i+1, V):
-                diff = self.d - self.countPrevNeighbors(i)
-                if diff > 0:
-                    neighbors = random.sample(range(j, V), diff)
-                    for n in neighbors:
-                        self.A[i,n] = 1
-                        self.A[n,i] = 1
+        self.A = np.zeros(shape=(self.V,self.V))
+        for i in range(self.V-1):
+            diff = self.degree - self.countPrevNeighbors(i)
+            if diff > 0:
+                neighbors = random.sample(range(i+1, self.V), diff)
+                for n in neighbors:
+                    self.A[i,n] = 1
+                    self.A[n,i] = 1
 
     # Given a vertex i, we label the neighbors assigning the 3 labels
     def labelNeighbors(self, i):
-        orderLabels = random.sample(range(0, self.d), 3)
+        orderLabels = random.sample(range(0, self.degree), 3)
         count = 0
-        for j in range(V):
-            if self.A[i,j] == 1
+        for j in range(self.V):
+            if count == 3:
+                break
+            if self.A[i,j] == 1:
                 self.G[i,j] = orderLabels[count]
                 count = count + 1
 
