@@ -7,7 +7,7 @@ estimateLikelihood = function(beta, y){
   # set.seed(12254)
   
   T = dim(y)[1]
-  N = 1000
+  N = 10000
   phi = 0.98
   sigma = 0.16
   l = 0 
@@ -48,7 +48,7 @@ estimateLikelihoodResampl = function(beta, y){
   # set.seed(12254)
   
   T = dim(y)[1]
-  N = 1000
+  N = 10000
   phi = 0.98
   sigma = 0.16
   l = 0

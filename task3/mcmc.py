@@ -15,14 +15,14 @@ def getNewAlpha(old_alpha, V):
 # Metropolis Hastings algorithm
 # This function returns a list of probabilities, the ones associated to the samples
 def metropolis_hastings(num_samples, train):
-    burn_in = int(num_samples / 2)               # Number of samples to discard
-    N = num_samples + burn_in                # MH iterations
+    burn_in = int(num_samples / 2)  # Number of samples to discard
+    N = num_samples + burn_in       # Number of samples to be considered
 
     # Initialization
     oldAlphas = train.graph.alphas
-    oldAlphas_p = train.computeProbObs()                  # Start probability
-    samples = list()                               # Sampled sigmas
-    probabilities = list()                                 # Saved probabilities
+    oldAlphas_p = train.computeProbObs()
+    samples = list()                # Sampled switch settings
+    probabilities = list()          # Probabilities associated to the samples
 
     print("Start switch settings probability:", oldAlphas_p)
 
@@ -49,10 +49,10 @@ def metropolis_hastings(num_samples, train):
             else : # keep the old switch settings
                 train.graph.setAlphas(oldAlphas)
 
-    # Find the switch settings which was chosen most often
-    tuples = [tuple(lst) for lst in samples]
-    counter = collections.Counter(tuples)
-    most_common = counter.most_common(1)[0]
-    most_common = list(most_common[0])
+    # Find the most likely switch settings according to the probabilities observed
+    temp = [tuple(lst) for lst in samples]
+    counter = collections.Counter(temp)
+    most_likely = counter.most_common(1)[0]
+    most_likely = list(most_likely[0])
 
-    return probabilities, most_common
+    return probabilities, most_likely

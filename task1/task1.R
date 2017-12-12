@@ -1,8 +1,7 @@
 ####################################################################
 #         2.1 SMC for the stochastic volatility model              #
 ####################################################################
-setwd("C:/Users/Vale/Dropbox/Poli/Erasmus/KTH/Statitical Methods for Applied Computer Science/Assignments/Assignment 2/task1")
-
+setwd("C:/Users/Vale/Dropbox/Poli/Erasmus/KTH/Statitical Methods for Applied Computer Science/DD2447_2017/task1")
 source("task1_functions.R")
 
 # Question 1
