@@ -1,0 +1,38 @@
+% Chapter Template
+\chapter{Generation} % Main chapter title
+
+\label{Generation} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+\lhead{2. \emph{Generation}} % Change X to a consecutive number; this is for the header on each page - perhaps a shortened title
+
+%----------------------------------------------------------------------------------------
+%	SECTION 1
+%----------------------------------------------------------------------------------------
+
+The magic word generative model proceeds as follow:
+
+\begin{itemize}
+\item For each sequence $s^n$ in $s^1 \dots s^N$, we sample a start position $r_n \sim U(M-W+1)$
+\item Then for each sequence, we sample the letters in the positions $j$ in the magic word : 
+\begin{equation*}
+x^n_j \sim Cat(\theta_j) 
+\end{equation*}
+Where $\theta_j \sim Dir(\alpha)$ and $j \in [r_n, r_n + W - 1]$
+\item Finally, we sample the letters in the background positions for all sequences:
+\begin{equation*}
+x^n \sim Cat(\theta) \quad \text{Where} \quad \theta \sim Dir(\alpha')
+\end{equation*}
+\end{itemize}
+Since we have no prior specific knowledge about the background of the DNA sequences, we will use a uniform prior for $\theta$ with parameter $\alpha' = \begin{pmatrix}
+1&1&1&1
+\end{pmatrix}$. All sequences will be generated from the same categorical distribution. For the magic words in the sequences however, the $j$:th positions are generated from distinct categorical distributions parameters $\theta_j$ having the same prior $Dir(\alpha)$, which complicates accurate inference. 
+We generate set of 5 sequences ($N=5$) and 30 columns ($M=10$), with magic words of length 10 ($W= 5 $), with $\alpha' = (1, 1,1,1)$ and $\alpha = (12,7,3,1)$. The start positions are highlighted:
+\begin{equation*}
+\begin{matrix}
+A & T & T & A & \hlight{C} & G & C & A & A & T \\
+T & A & T & T & \hlight{A} & A & C & G & A & C \\
+\hlight{C} & G & C & C & A & C & A & C & C & A \\
+C & G & C & T & A & \hlight{A} & A & G & A & A \\
+A & T & A & A & T & \hlight{A} & G & A & G & A 
+\end{matrix}
+\end{equation*}
