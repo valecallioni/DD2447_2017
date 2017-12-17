@@ -5,18 +5,20 @@ class Train:
     graph = Graph()
     D = graph.degree
     V = graph.V
-    T = 9                   # Number of observations, the given data
+    T = 6                  # Number of observations, the given data
     O = list()              # Observations
+    O_true = list()         # True observations, without noise
     path = list()           # Path corresponding to the true observations
     p = 0.05                # Probability associated with noise
 
     def __init__(self):
-        self.O, self.path = self.generateObservationsPath()
+        self.O, self.O_true, self.path = self.generateObservationsPath()
         if len(self.O) < self.T:
             self.T = len(self.O)
 
     def generateObservationsPath(self):
         observations = list()
+        true_observations = list()
         path = list()
 
         # First random observation
@@ -55,13 +57,13 @@ class Train:
                         previous_v = current_v
                         current_v = j
                         break
-
+        true_observations = observations.copy()
         # Add some noise
         for i in range(self.T):
             r = np.random.randint(1, 101)
             if r < self.p * 100:
                 observations[i] = np.random.randint(0, self.D)
-        return observations, path
+        return observations, true_observations, path
 
     # Probability of going from some position s' to s=(v,e) (i.e., the train
     # has passed v exiting through e) in t steps and observing observations O

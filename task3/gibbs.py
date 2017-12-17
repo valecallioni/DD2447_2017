@@ -22,10 +22,8 @@ def GibbsSampling(num_samples, train):
     # Initialization
     alphas = train.graph.alphas
     alphas_p = train.computeProbObs()
-    samplesSS = list()              # Sampled switch settings
-    probabilitiesSS = list()        # Probabilities associated to the sampled switch settings
-
-    print("Start switch settings probability:", alphas_p)
+    samples = list()              # Sampled switch settings
+    probabilities = list()        # Probabilities associated to the sampled switch settings
 
     for i in range(N):
         # Sample one switch component at a time
@@ -33,13 +31,71 @@ def GibbsSampling(num_samples, train):
             alphas = getSampleSwitchComponent(alphas, j)
             train.graph.setAlphas(alphas)
             alphas_p = train.computeProbObs()
-            samplesSS.append(alphas)
-            probabilitiesSS.append(alphas_p)
+            samples.append(alphas)
+            probabilities.append(alphas_p)
 
     # Find the most likely switch settings according to the probabilities observed
-    temp = [tuple(lst) for lst in samplesSS]
+    temp = [tuple(lst) for lst in samples]
+
+    node1 = list()
+    for i in temp:
+        node1.append(i[0])
+
     counter = collections.Counter(temp)
     most_likely = counter.most_common(1)[0]
     most_likely = list(most_likely[0])
 
-    return probabilitiesSS, most_likely
+    return probabilities, most_likely, node1
+
+def getNewAlphaBlock(old_alpha):
+    # Flip random switch
+    n = len(old_alpha)
+    new_alpha = old_alpha.copy()
+    new_switch = np.random.randint(0, n)
+    if new_alpha[new_switch] == 2:
+        new_alpha[new_switch] = 1
+    else:
+        new_alpha[new_switch] = 2
+    return new_alpha
+
+def blockedGibbsSampling(num_samples, train, n):
+    burn_in = int(num_samples / 2)  # Number of samples to discard
+    N = num_samples + burn_in       # Number of samples to be considered
+
+    # Initialization
+    alphas = train.graph.alphas
+    alphas_p = train.computeProbObs()
+    samples = list()              # Sampled switch settings
+    probabilities = list()        # Probabilities associated to the sampled switch settings
+    r = len(alphas) % n
+    m = int(len(alphas)/n)
+    if r > 0:
+        m = m + 1
+
+    for i in range(N):
+        # Sample one switch component at a time
+        for j in range(m):
+            if r > 0:
+                if j < m - 1:
+                    alphas[(0+j*n):(n+j*n)] = getNewAlphaBlock(alphas[(0+j*n):(n+j*n)])
+                else:
+                    alphas[(n-r):n] = getNewAlphaBlock(alphas[(n-r):n])
+            else:
+                alphas[(0+j*n):(n+j*n)] = getNewAlphaBlock(alphas[(0+j*n):(n+j*n)])
+            train.graph.setAlphas(alphas)
+            alphas_p = train.computeProbObs()
+            samples.append(alphas)
+            probabilities.append(alphas_p)
+
+    # Find the most likely switch settings according to the probabilities observed
+    temp = [tuple(lst) for lst in samples]
+
+    node1 = list()
+    for i in temp:
+        node1.append(i[0])
+
+    counter = collections.Counter(temp)
+    most_likely = counter.most_common(1)[0]
+    most_likely = list(most_likely[0])
+
+    return probabilities, most_likely, node1

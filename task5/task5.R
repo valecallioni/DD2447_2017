@@ -10,10 +10,8 @@ library(pscl)
 # Question 11
 #-------------------------------------------------------------------
 T = 500
-N = 1000
-phi = 0.98
-a = 0.01
-b = 0.01
+N = 10000
+phi = 0.951934
 
 X = NULL        # will have dimension TXN
 sigma2 = NULL   # will have dimension 1xN
@@ -22,7 +20,7 @@ beta2 = NULL    # will have dimension 1xN
 y = read.table("output.txt")
 
 # Initialization of sigma2 and X
-sigma0 = rigamma(1, a, b)
+sigma0 = 0.164643756
 x = array(0,T+1)
 x[1] =  rnorm(1, 0, sqrt(sigma0/(1-phi^2)))
 for (t in 2:(T+1))
@@ -38,21 +36,24 @@ for (i in 1:N){
   beta2 = c(beta2, beta)
 }
 
-x11()
-plot(1:N, sigma2, main="Sigma2 estimates")
+# x11()
+# plot(1:N, sigma2, main="Sigma2 estimates", type="l")
+# 
+# x11()
+# plot(1:N, beta2, main="Beta2 estimates", type="l")
 
 x11()
-plot(1:N, beta2, main="Beta2 estimates")
+hist(sigma2)
 
-
+x11()
+hist(beta2)
 
 # Question 12
 #-------------------------------------------------------------------
 T = 500
-N = 1e4
-phi = 0.98
-a = 0.01
-b = 0.01
+N = 10000
+phi = 0.951934
+
 
 x = array(0,c(T+1,N))
 sigma2 = array(0,c(T,N))
@@ -61,7 +62,7 @@ beta2 = array(0,c(T,N))
 y = read.table("output.txt")
 
 # Initialization of sigma2 and X
-sigma0 = rinvgamma(N, a, b)
+sigma0 = 0.164643756
 x0 = array(0,N)
 x0 = sapply(sqrt(sigma0/1-phi^2), normalSamplingX, mu = 0)
 x[1, ] = mapply(normalSamplingX, phi*x0, sigma0)

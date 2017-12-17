@@ -14,7 +14,7 @@ import numpy as np
 
 class Graph:
     # Attributes of the graph
-    V = 10
+    V = 6
     degree = 3
     A = np.zeros(shape=(V,V)) # Adjacency matrix
     G = np.empty(shape=(V,V)) # Matrix representing the actual graph

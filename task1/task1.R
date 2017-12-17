@@ -9,7 +9,7 @@ source("task1_functions.R")
 
 y = read.table("output.txt")
 
-beta = seq(0.001, 0.5, length.out = 20)
+beta = seq(0.05, 2, length.out = 20)
 likelihood = NULL
 for (k in 1:10){
   l = NULL
@@ -18,8 +18,18 @@ for (k in 1:10){
 }
 
 x11()
-boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC without resampling", names = round(beta, digit=2), ylim=c(-200, 250))
+boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC without resampling", names = round(beta, digit=2))
 
+M = array(-1000,20)
+for (i in 1:20){
+  m = likelihood[,i]
+  m = m[-which(is.nan(m))]
+  if (length(m)>0)
+    M[i] = mean(m)
+}
+M
+idx = which(M==max(M))
+beta[idx]
 
 
 # Question 2
@@ -27,7 +37,7 @@ boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main =
 
 y = read.table("output.txt")
 
-beta = seq(0, 2, length.out = 20)
+beta = seq(0.05, 2, length.out = 20)
 likelihood = NULL
 for (k in 1:10){
   l = NULL
@@ -38,4 +48,12 @@ for (k in 1:10){
 x11()
 boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC with resampling", names = round(beta, digit=2))
 
-
+M = array(0,20)
+for (i in 1:20){
+  m = likelihood[,i]
+  if (length(m)>0)
+    M[i] = mean(m)
+}
+M
+idx = which(M==max(M))
+beta[idx]

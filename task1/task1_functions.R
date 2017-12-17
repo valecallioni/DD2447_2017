@@ -4,35 +4,38 @@ normalSamplingX = function(mu, sigma){
 
 estimateLikelihood = function(beta, y){
   
-  # set.seed(12254)
-  
-  T = dim(y)[1]
-  N = 10000
-  phi = 0.98
-  sigma = 0.16
+  T = 100
+  N = 1000
+  phi = 0.951934
+  sigma = 0.164643756
   l = 0 
-  
-  # At each time t, we sample N samples, and therefore we have N weights 
-  x = array(0,c(T,N))
-  w = array(0,c(T,N))
   
   # Time t = 1, thanks to the stationarity setting
   x0 = rnorm(N, 0, sqrt(sigma^2/(1-phi^2)))
   
   # Sampling N times, looking at x0 values
-  x[1,] = sapply(phi*x0, normalSamplingX, sigma=sigma)
+  x_old = sapply(phi*x0, normalSamplingX, sigma=sigma)
+  x_new = x_old
   
-  # Supposing to have y vector of length T, the data, the weight is given by 
-  # the probability of each datapoint given the sample
-  w[1,] = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
-  l = l + log(sum(w[1,])) - log(N)
+  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sqrt((sigma^2/(1-phi^2)))) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
+  alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_old))) * p1
+  w = alpha
+  W = w/sum(w)
+  
+  l = l + log(sum(w))
   
   # At each time, first sample N points, then compute the weights, that give
   # us the estimate of the target probability distribution
   for (t in 2:T){
-    x[t,] = sapply(phi*x[t-1,], normalSamplingX, sigma = sigma)
-    w[t,] = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
-    l = l + log(sum(w[t,])) - log(N)
+    x_new = sum(sapply(phi*x_old, normalSamplingX, sigma = sigma))
+
+    alpha = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x_new)))
+    
+    l = l + log(sum(W*alpha))
+    w = w * alpha
+    W = w/sum(w)
+    
+    x_old = x_new
   }
   
   return(l)
@@ -45,19 +48,11 @@ generateU = function(v, u1, N){
 
 estimateLikelihoodResampl = function(beta, y){
   
-  # set.seed(12254)
-  
-  T = dim(y)[1]
-  N = 10000
-  phi = 0.98
-  sigma = 0.16
+  T = 100
+  N = 1000
+  phi = 0.951934
+  sigma = 0.164643756
   l = 0
-  
-  # At each time t, we sample N samples, and therefore we have N weights 
-  x = array(0,c(T,N))
-  w = array(0,c(T,N))
-  W = array(0,c(T,N))
-  offspring = array(0,c(T,N))
   
   u = array(0,N)
   u[1] = runif(1, 0, 1/N)
@@ -66,39 +61,71 @@ estimateLikelihoodResampl = function(beta, y){
   # Time t = 1
   x0 = rnorm(N, 0, sqrt(sigma^2/(1-phi^2)))
   
-  # Supposing to have y vector of length T, the data, the weight is given by 
-  # the probability of that datapoint given the sample
-  x[1,] = sapply(phi*x0, normalSamplingX, sigma=sigma)
+  # Sampling N times, looking at x0 values
+  x_old = sapply(phi*x0, normalSamplingX, sigma=sigma)
   
-  w[1,] = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x[1,]))) 
+  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sqrt((sigma^2/(1-phi^2)))) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
+  alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_old))) * p1
+  w = alpha
+  W = w/sum(w)
   
-  # Normalize the weights
-  W[1,] = w[1,]/sum(w[1,])
-  
+  offspring = array(0,length(w))
+  x_new = NULL
   for (i in 1:N){
-    lower = sum(W[1,1:(i-1)])
-    upper = sum(W[1,1:i])
+    if (i==1)
+      lower = 0
+    else 
+      lower = sum(W[1:(i-1)])
+    upper = sum(W[1:i])
     count = length(which(u>=lower & u<=upper))
-    offspring[1,i] = count
+    offspring[i] = count
+    if (count > 0){
+      x_new = c(x_new, rep(x_old[i], offspring[i])) 
+    }
   }
   
-  l = l + log(sum(offspring[1,])/N)
+  if (!is.null(x_new)){
+    
+    alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_new)))
+    l = l + log(sum((1/N)*alpha))
+  
+  }
   
   for (t in 2:T){
     
-    x[t,] = sapply(phi*x[t-1,], normalSamplingX, sigma = sigma)
-    w[t,] = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x[t,])))
-    W[t,] = w[t,]/sum(w[t,])
+    x_old = sapply(phi*x_new, normalSamplingX, sigma = sigma)
+    
+    alpha = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x_old)))
+    w = w * alpha
+    W = w/sum(w)
+    
+    u = array(0,N)
+    u[1] = runif(1, 0, 1/N)
+    u[2:N] = sapply(2:N, generateU, u1=u[1], N=N)
     
     # Resampling step
-    for (i in 1:N){
-      lower = sum(W[t,1:(i-1)])
-      upper = sum(W[t,1:i])
+    x_new = NULL
+    offspring = array(0,length(w))
+    for (i in 1:length(offspring)){
+      if (i==1)
+        lower = 0
+      else 
+        lower = sum(W[1:(i-1)])
+      upper = sum(W[1:i])
       count = length(which(u>=lower & u<=upper))
-      offspring[t,i] = count
+      offspring[i] = count
+      if (count > 0){
+        x_new = c(x_new, rep(x_old[i], offspring[i])) 
+      }
     }
     
-    l = l + log(sum(offspring[t,])/N) 
+    if (is.null(x_new)){
+      break
+    }
+    
+    alpha = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x_new)))
+    l = l + log(sum((1/N)*alpha))
+
   }
   
   return(l)

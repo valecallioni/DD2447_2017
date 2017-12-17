@@ -18,7 +18,7 @@ update_sigma2 = function(x, phi, T){
   
   temp = sum((x[2:(T+1)]-phi*x[1:T])^2)
   
-  return (rigamma(1, a+T/2, b+temp/2))
+  return (rinvgamma(1, shape=a+T/2, scale=b+temp/2))
 }
 
 update_beta2 = function(x, y, T){
@@ -32,9 +32,9 @@ update_beta2 = function(x, y, T){
   # for (t in 1:T)
   #   temp = temp + exp(-x[t])*y[t]^2
   
-  return (rigamma(1, a+T/2, b+temp/2))
+  return (rinvgamma(1, shape=a+T/2, scale=b+temp/2))
 }
 
 samplingIG = function(a, b){
-  return (rigamma(1, a, b))
+  return (rinvgamma(1, shape=a, scale=b))
 }

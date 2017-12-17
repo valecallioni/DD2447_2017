@@ -24,8 +24,6 @@ def metropolis_hastings(num_samples, train):
     samples = list()                # Sampled switch settings
     probabilities = list()          # Probabilities associated to the samples
 
-    print("Start switch settings probability:", oldAlphas_p)
-
     for i in range(N):
         # Generate a new random switch
         newAlphas = getNewAlpha(oldAlphas, train.V)
@@ -41,18 +39,25 @@ def metropolis_hastings(num_samples, train):
             probabilities.append(newAlphas_p) # Save the generated probability if we have passed the burn in part
 
             u = np.random.randint(1, 101)
-            if u < r * 100: # accept proposal and set the swtich settings
+            if u < r * 100:
+                # accept proposal and set the swtich settings
                 oldAlphas = newAlphas
                 oldAlphas_p = newAlphas_p
                 samples.append(oldAlphas)
                 probabilities[-1] = oldAlphas_p # Change to the better probability
-            else : # keep the old switch settings
+            else :
+                # keep the old switch settings
                 train.graph.setAlphas(oldAlphas)
 
     # Find the most likely switch settings according to the probabilities observed
     temp = [tuple(lst) for lst in samples]
+
+    node1 = list()
+    for i in temp:
+        node1.append(i[0])
+
     counter = collections.Counter(temp)
     most_likely = counter.most_common(1)[0]
     most_likely = list(most_likely[0])
 
-    return probabilities, most_likely
+    return probabilities, most_likely, node1
