@@ -12,6 +12,8 @@
 \begin{document}
 \maketitle
 
+\newpage
+
 \section*{2.1 SMC for the stochastic volatility model}
 In this first task we have to consider the stochastic volatility model
 \begin{align*}
@@ -90,6 +92,7 @@ and
 $$
 \hat{p}(y_t|y_{1:t-1}) = \sum_{i=1}^{N}W_{n-1}^i\alpha_t(X_{t-1:t}^i).
 $$
+\subsection*{Question 1}
 Following this reasoning, we implemented the SMC algorithm. The first step is given by the initialization, that is 
 \begin{enumerate}
 	\item[-] sample $X_0^i \sim \mathcal{N}(0, \frac{\sigma^2}{1-\phi^2})$
@@ -113,6 +116,7 @@ Considering a coarse grid for $\beta$, given by 20 points equally-spaced in the 
 \end{figure}
 where we can see that the maximum value of the log-likelihood is reached, in mean, for $\beta=0.46$.
 
+\subsection*{Question 2}
 Introducing resampling means to sample from an approximation $\hat{\pi}(x_{1:t})$ which was itself obtained by sampling. We resample $N$ times from $\hat{\pi}(x_{1:t})$, which is equivalent to associating a number of offspring $N_t^i$ with each particle $X_{1:t}^i$ in such a way that $N_t^{1:N} = (N_t^1, ..., N_t^N)$ follow a multinomial distribution with parameter vector $(N, W_t^{1:N})$ and associating a weight of $\frac{1}{N}$ with each offspring. Since we use systematic resampling, the previous algorithm becomes as follows:
 
 Initialization:
@@ -146,6 +150,7 @@ where we can see that the maximum value of the log-likelihood is reached, in mea
 
 In both experiments we considered $N=100 \text{ and } T=500$. We can observe that the variance of the estimator decreases using resampling. 
 
+\subsection*{Question 4}
 Finally, we run the algorithm with different values of $N$ and $T$, to study how these parameters affect the variance in the log-likelihood estimate. 
 
 \begin{figure}
@@ -165,7 +170,7 @@ Finally, we run the algorithm with different values of $N$ and $T$, to study how
 
 From Figure 3, we observe that for smaller values of T we have a correct estimation of the true value of $\beta$ (i.e., the log-likelihood is maximized for the true value of $\beta$), that is 0.1011. This is due to the fact that for large values of $T$ the particle filtering may degenerate. But, in any case, the SIR algorithm performs better than the SIS one, as we expect. 
 
-
+\newpage
 
 \section*{2.3 MCMC for the train}
 We are given a problem that models a railway with a single train. The map of the tracks is represented by an undirected graph $G=(V,E)$, such that each node has degree 3 and at each vertex edges are labeled $0, L or R$. Each vertex represents a switch: if the train comes from the direction of $L$ or $R$, it always leaves in the direction 0; if the train comes from the direction $0$, it will leave in either direction $L$ or $R$, depending on the state of the switch. The switch has prior probability 1/2 for each direction, but will remain the same throughout the train run. A switch setting is a function $\alpha : V(G) \rightarrow \{L,R\}$
@@ -283,6 +288,36 @@ For instance, we run the blocked Gibbs sampling for $n=2$ with $V=6$, that means
 \end{center}
 
 In our sampling algorithms we do not need to sample the stop position $s$ for the reasoning about proposals and acceptance probabilities that we provided at the beginning of the task. However, we could compute the probability associated to each stop position given the switch settings. 
+
+\newpage
+
+\section*{2.5 Stochastic volatility unknown parameter}
+Let us consider the problem presented in task 2.1. Now, we assume that the variance parameters $\sigma$ and $\beta$ are both unknown, while $\phi$ is given. The Bayesian setting is characterized by the priors:
+$$
+\sigma^2 \sim \mathit{IG}(a=0.01, b=0.01)
+$$
+$$
+\beta^2 \sim \mathit{IG}(a=0.01, b=0.01)
+$$
+Then, we obtain the posterior distributions of the variance parameters in closed form:
+$$
+p(\sigma^2|\phi, x_{0:T}, y_{1:T}) = \mathit{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}(x_t-\phi x_{t-1})^2)
+$$
+$$
+p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathit{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)
+$$
+
+\subsection*{Question 13}
+We implemented a particle Gibbs sampler to compute the posterior distribution $p(\sigma^2, \beta^2|\phi, y_{1:T})$. To do so, at each iteration we alternatively sample from
+\begin{enumerate}
+	\item[-] $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$
+	\item[-] $p(\beta^2|\phi, x_{0:T}, y_{1:t})$
+	\item[-] $p(x_{0:T}|\theta, y_{1:T})$
+\end{enumerate}
+The initialization is perfomed considering, as first value of $\sigma^2$ the true value, i.e., $\sigma = 0.1646$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
+
+Considering $N=10^4$ and $T=500$, we obtained the following marginal distributions:
+
 
 \end{document}
 

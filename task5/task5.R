@@ -6,6 +6,7 @@ source("task5_functions.R")
 
 library(invgamma)
 library(pscl)
+library(ggplot2)
 
 # Question 11
 #-------------------------------------------------------------------
@@ -43,10 +44,10 @@ for (i in 1:N){
 # plot(1:N, beta2, main="Beta2 estimates", type="l")
 
 x11()
-hist(sigma2)
+hist(sigma2, main="Marginal distribution for Sigma")
 
 x11()
-hist(beta2)
+hist(beta2, main="Marginal distribution for Beta")
 
 # Question 12
 #-------------------------------------------------------------------
