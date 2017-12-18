@@ -44,10 +44,10 @@ for (i in 1:N){
 # plot(1:N, beta2, main="Beta2 estimates", type="l")
 
 x11()
-hist(sigma2, main="Marginal distribution for Sigma")
+qplot(sigma2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Sigma") 
 
 x11()
-hist(beta2, main="Marginal distribution for Beta")
+qplot(beta2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Beta") 
 
 # Question 12
 #-------------------------------------------------------------------

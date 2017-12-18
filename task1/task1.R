@@ -9,11 +9,18 @@ source("task1_functions.R")
 
 y = read.table("output.txt")
 
-beta = seq(0.05, 2, length.out = 20)
+beta = seq(0.1, 2, length.out = 20)
 likelihood = NULL
 for (k in 1:10){
   l = NULL
-  l = sapply(beta, estimateLikelihood, y=y)
+  # l = sapply(beta, estimateLikelihood, y=y)
+  for (b in beta){
+    temp = estimateLikelihood(b,y)
+    while (temp[2]<100){
+      temp = estimateLikelihood(b,y)
+    }
+    l = c(l, temp[1])
+  }
   likelihood = rbind(likelihood, l)
 }
 
@@ -37,16 +44,23 @@ beta[idx]
 
 y = read.table("output.txt")
 
-beta = seq(0.05, 2, length.out = 20)
+beta = seq(0.1, 2, length.out = 20)
 likelihood = NULL
 for (k in 1:10){
   l = NULL
-  l = sapply(beta, estimateLikelihoodResampl, y=y)
+  # l = sapply(beta, estimateLikelihoodResampl, y=y)
+  for (b in beta){
+    temp = estimateLikelihoodResampl(b,y)
+    while (temp[2]<100){
+      temp = estimateLikelihoodResampl(b,y)
+    }
+    l = c(l, temp[1])
+  }
   likelihood = rbind(likelihood, l)
 }
 
 x11()
-boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC with resampling", names = round(beta, digit=2))
+boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC with resampling", names = round(beta, digit=2), ylim=c(-200,0))
 
 M = array(0,20)
 for (i in 1:20){
