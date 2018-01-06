@@ -28,7 +28,7 @@ $$
 The latent variable $X_t$ denotes the underlying volatility, i.e. the variations in the price of some ﬁnancial asset, and $Y_t$ denotes the observed scaled log-returns from the asset. 
 First we generate parameters together with a synthetic data vector $y_{1:T}$, $T = 500$, based on the stochastic volatility model, using the generator provided; then we implement a SMC algorithm with and without resampling with the final goal of estimating the likelihood for different values of the parameter $\beta$, considering the other parameters to be known. 
 
-Let us explain the setting. $\{X_t\}_{t\geq0}$ is a discrete-time Markov process such that 
+Let us explain the setting. We analyzed it using the paper "A Tutorial on Particle Filtering and Smoothing: Fifteen years later", as theoretical support. $\{X_t\}_{t\geq0}$ is a discrete-time Markov process such that 
 $$
 X_0 \sim \mu(x_0) \text{ and } X_t|X_{t-1} = x_{t-1} \sim f(x_t|x_{t-1})
 $$
@@ -109,12 +109,12 @@ Then, at each iteration $t \geq 2$:
 	\item[-] compute the weights $
 	w_t(X_{0:t}^i)=w_0(X_1^i)\prod_{k=2}^{t}\alpha_k(X_{0:k}^i)$ and the normalized weights
 \end{enumerate}
-Considering a coarse grid for $\beta$, given by 20 points equally-spaced in the interval $(0,2)$ and running 10 times the SMC for every value of $\beta$, we obtained the following result:
+Considering a coarse grid for $\beta$, given by 20 points equally-spaced in the interval $(0,2)$ and running 10 times the SMC for every value of $\beta$, we obtained the result presented in Figure 1. 
 \begin{figure}
 	\includegraphics[width=\columnwidth]{task1/SIS_N_100_T_500.jpeg}
 	\caption{Log-likelihood running SIS 10 times, with $N=100$ and $T=500$}
 \end{figure}
-where we can see that the maximum value of the log-likelihood is reached, in mean, for $\beta=0.46$.
+The data were generated with the following parameters values: $\phi = 0.97$, $\sigma=0.13$ and $\beta=0.67$. From Figure 1 we can see that the maximum value of the log-likelihood is reached, in mean, for $\beta=0.7$.
 
 \subsection*{Question 2}
 Introducing resampling means to sample from an approximation $\hat{\pi}(x_{1:t})$ which was itself obtained by sampling. We resample $N$ times from $\hat{\pi}(x_{1:t})$, which is equivalent to associating a number of offspring $N_t^i$ with each particle $X_{1:t}^i$ in such a way that $N_t^{1:N} = (N_t^1, ..., N_t^N)$ follow a multinomial distribution with parameter vector $(N, W_t^{1:N})$ and associating a weight of $\frac{1}{N}$ with each offspring. Since we use systematic resampling, the previous algorithm becomes as follows:
@@ -141,12 +141,11 @@ Then, at each iteration $t \geq 2$:
 	\item[-] compute the weights $
 	w_t(X_{0:t}^i)=w_0(X_1^i)\prod_{k=2}^{t}\alpha_k(X_{0:k}^i)$ and the normalized weights
 \end{enumerate}
-Considering the same coarse grid for $\beta$ as before, and running 10 times the SMC with resampling for every value of $\beta$, we obtained the following result:
+Considering the same coarse grid for $\beta$, the same data as before, and running 10 times the SMC with resampling for every value of $\beta$, we obtained the result represented in Figure 2.
 \begin{figure}
 	\includegraphics[width=\columnwidth]{task1/SIR_N_100_T_500.jpeg}
 	\caption{Log-likelihood running SIR 10 times, with $N=100$ and $T=500$}
 \end{figure}
-where we can see that the maximum value of the log-likelihood is reached, in mean, for $\beta=0.357$.
 
 In both experiments we considered $N=100 \text{ and } T=500$. We can observe that the variance of the estimator decreases using resampling. 
 
@@ -158,11 +157,11 @@ Finally, we run the algorithm with different values of $N$ and $T$, to study how
 		\includegraphics[width=.4\textwidth]{task1/SIS_N_1000_T_500.jpeg}
 		\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_500.jpeg}
 		\caption*{$N=1000$ and $T=500$}
-		\includegraphics[width=.4\textwidth]{task1/SIS_N_100_T_100.jpeg}
-		\includegraphics[width=.4\textwidth]{task1/SIR_N_100_T_100.jpeg}
+		%\includegraphics[width=.4\textwidth]{task1/SIS_N_100_T_100.jpeg}
+		%\includegraphics[width=.4\textwidth]{task1/SIR_N_100_T_100.jpeg}
 		\caption*{$N=100$ and $T=100$}
 		\includegraphics[width=.4\textwidth]{task1/SIS_N_1000_T_100.jpeg}
-		\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_100.jpeg}
+		%\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_100.jpeg}
 		\caption*{$N=1000$ and $T=100$}
 	\end{center}
 	\caption{Comparison of the results for different values of $T$ and $N$}
@@ -215,13 +214,13 @@ In the MCMC Metropolis Hastings algorithm that we propose, states are switch set
 At the end we obtain sample switch settings, that we store just after the $burn-in$ phase, and their associated probability.
 
 \subsection*{Question 9}
-To run the program, we set $V=6$ and $O=6$. We decided not to consider too many nodes, since otherwise the probabilities associated to the switch setting vectors would have been very small. Setting $V=6$ we expect to understand the results of the MCMC algorithm. Furthermore, first we considered $N=1000$, that leads to have $10^3$ samples that will actually be considered in the results, and $500$ initial iterations that will be considered as belonging to the \emph{burn-in} phase. The result that we obtained is the following:
+To run the program, we set $V=6$ and $O=6$. We decided not to consider too many nodes, since otherwise the probabilities associated to the switch setting vectors would have been very small. Setting $V=6$ we expect to understand the results of the MCMC algorithm. Furthermore, first we considered $N=10^3$, that leads to have $10^3$ samples that will actually be considered in the results, and $500$ initial iterations that will be considered as belonging to the \emph{burn-in} phase. The result that we obtained is the following:
 \begin{center}
 	\includegraphics[height=7cm]{task3/V_6_T_6_N_1000.png}
 \end{center}
 We can observe that the probability distribution provided by the sampling is quite stable.
 
-To understand the accuracy of the method, we compared the true switch settings with the most likely, according to the result. The most likely switch settings are the one that were chosen most often during the sampling. 
+To understand the accuracy of the method, we compared the true switch settings with the most likely, according to the result. The most likely switch settings are the ones that were chosen most often during the sampling. 
 \begin{center}
 	\begin{tabular}{| c | c | c | c | c | c | c |}
 		True $\alpha(\mathbf{v})$ & $R$ & $L$ & $L$ & $R$ & $R$ & $L$ \\

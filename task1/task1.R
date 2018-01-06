@@ -51,7 +51,7 @@ for (k in 1:10){
   # l = sapply(beta, estimateLikelihoodResampl, y=y)
   for (b in beta){
     temp = estimateLikelihoodResampl(b,y)
-    while (temp[2]<100){
+    while (temp[2]<200){
       temp = estimateLikelihoodResampl(b,y)
     }
     l = c(l, temp[1])
@@ -60,7 +60,7 @@ for (k in 1:10){
 }
 
 x11()
-boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC with resampling", names = round(beta, digit=2), ylim=c(-200,0))
+boxplot.matrix(likelihood, xlab = "Beta values", ylab = "Log-likelihood", main = "SMC with resampling", names = round(beta, digit=2), ylim=c(-500,-300))
 
 M = array(0,20)
 for (i in 1:20){

@@ -5,7 +5,7 @@ normalSamplingX = function(mu, sigma){
 estimateLikelihood = function(beta, y){
   
   T = 500
-  N = 1000
+  N = 10000
   phi = 0.9709
   sigma = 0.1315
   l = 0 
@@ -58,7 +58,7 @@ generateU = function(v, u1, N){
 estimateLikelihoodResampl = function(beta, y){
   
   T = 500
-  N = 1000
+  N = 10000
   phi = 0.9709
   sigma = 0.1315
   l = 0
@@ -95,8 +95,9 @@ estimateLikelihoodResampl = function(beta, y){
   
   if (!is.null(x_new)){
     
+    p1 = sum(mapply(dnorm, x_new, phi*x0, sd=sqrt((sigma^2/(1-phi^2)))) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
     alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_new)))
-    w_new = alpha
+    w_new = alpha*p1
     W_new = w_new/sum(w_new)
     l = l + log(sum((1/N)*alpha))
   
@@ -131,6 +132,7 @@ estimateLikelihoodResampl = function(beta, y){
     }
     
     if (is.null(x_new)){
+      print(t)
       break
     }
     
