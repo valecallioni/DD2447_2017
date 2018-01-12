@@ -5,7 +5,7 @@ normalSamplingX = function(mu, sigma){
 estimateLikelihood = function(beta, y){
   
   T = 500
-  N = 10000
+  N = 500
   phi = 0.9709
   sigma = 0.1315
   l = 0 
@@ -19,7 +19,7 @@ estimateLikelihood = function(beta, y){
   x_old = sapply(phi*x0, normalSamplingX, sigma=sigma)
   x_new = x_old
   
-  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sqrt((sigma^2/(1-phi^2)))) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
+  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sigma) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
 
   alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_old))) * p1
   w = alpha
@@ -58,7 +58,7 @@ generateU = function(v, u1, N){
 estimateLikelihoodResampl = function(beta, y){
   
   T = 500
-  N = 10000
+  N = 500
   phi = 0.9709
   sigma = 0.1315
   l = 0
@@ -73,7 +73,7 @@ estimateLikelihoodResampl = function(beta, y){
   # Sampling N times, looking at x0 values
   x_old = sapply(phi*x0, normalSamplingX, sigma=sigma)
   
-  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sqrt((sigma^2/(1-phi^2)))) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
+  p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sigma) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
   alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_old))) * p1
   w_old = alpha
   W_old = w_old/sum(w_old)

@@ -111,8 +111,8 @@ Then, at each iteration $t \geq 2$:
 \end{enumerate}
 Considering a coarse grid for $\beta$, given by 20 points equally-spaced in the interval $(0,2)$ and running 10 times the SMC for every value of $\beta$, we obtained the result presented in Figure 1. 
 \begin{figure}
-	\includegraphics[width=\columnwidth]{task1/SIS_N_100_T_500.jpeg}
-	\caption{Log-likelihood running SIS 10 times, with $N=100$ and $T=500$}
+	\includegraphics[width=\columnwidth]{task1/SIS_N_10000_T_500.jpeg}
+	\caption{Log-likelihood running SIS 10 times, with $N=10^4$ and $T=500$}
 \end{figure}
 The data were generated with the following parameters values: $\phi = 0.97$, $\sigma=0.13$ and $\beta=0.67$. From Figure 1 we can see that the maximum value of the log-likelihood is reached, in mean, for $\beta=0.7$.
 
@@ -141,33 +141,29 @@ Then, at each iteration $t \geq 2$:
 	\item[-] compute the weights $
 	w_t(X_{0:t}^i)=w_0(X_1^i)\prod_{k=2}^{t}\alpha_k(X_{0:k}^i)$ and the normalized weights
 \end{enumerate}
-Considering the same coarse grid for $\beta$, the same data as before, and running 10 times the SMC with resampling for every value of $\beta$, we obtained the result represented in Figure 2.
-\begin{figure}
-	\includegraphics[width=\columnwidth]{task1/SIR_N_100_T_500.jpeg}
-	\caption{Log-likelihood running SIR 10 times, with $N=100$ and $T=500$}
-\end{figure}
-
-In both experiments we considered $N=100 \text{ and } T=500$. We can observe that the variance of the estimator decreases using resampling. 
+Considering the same coarse grid for $\beta$, the same data as before, and running 10 times the SMC with resampling for every value of $\beta$, we obtained the result represented in the follwing figure. We ran the SIR algorithm 10 times,  with $N=10^3$ and $T=500$.
+\\
+\includegraphics[width=\columnwidth]{task1/SIR_N_1000_T_500.jpeg}
 
 \subsection*{Question 4}
-Finally, we run the algorithm with different values of $N$ and $T$, to study how these parameters affect the variance in the log-likelihood estimate. 
+Finally, we run the algorithm with different values of $T$ and $N$, to study how these parameters affect the variance in the log-likelihood estimate. 
 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=.4\textwidth]{task1/SIS_N_1000_T_500.jpeg}
 		\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_500.jpeg}
-		\caption*{$N=1000$ and $T=500$}
-		%\includegraphics[width=.4\textwidth]{task1/SIS_N_100_T_100.jpeg}
-		%\includegraphics[width=.4\textwidth]{task1/SIR_N_100_T_100.jpeg}
-		\caption*{$N=100$ and $T=100$}
-		\includegraphics[width=.4\textwidth]{task1/SIS_N_1000_T_100.jpeg}
-		%\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_100.jpeg}
-		\caption*{$N=1000$ and $T=100$}
+		\caption*{$N=10^3$ and $T=500$}
+		\includegraphics[width=.4\textwidth]{task1/SIS_N_500_T_500.jpeg}
+		\includegraphics[width=.4\textwidth]{task1/SIR_N_500_T_500.jpeg}
+		\caption*{$N=500$ and $T=500$}
+		\includegraphics[width=.4\textwidth]{task1/SIS_N_1000_T_300.jpeg}
+		\includegraphics[width=.4\textwidth]{task1/SIR_N_1000_T_300.jpeg}
+		\caption*{$N=10^3$ and $T=300$}
 	\end{center}
 	\caption{Comparison of the results for different values of $T$ and $N$}
 \end{figure}
 
-From Figure 3, we observe that for smaller values of T we have a correct estimation of the true value of $\beta$ (i.e., the log-likelihood is maximized for the true value of $\beta$), that is 0.1011. This is due to the fact that for large values of $T$ the particle filtering may degenerate. But, in any case, the SIR algorithm performs better than the SIS one, as we expect. 
+From Figure 3, we observe that for smaller values of T we have a smaller variance in the estimator, especially in the SMC without resampling. This is due to the fact that for large values of $T$ the particle filtering may degenerate. But, in any case, the SIR algorithm performs better than the SIS one, as we expect. 
 
 \newpage
 
@@ -316,6 +312,93 @@ We implemented a particle Gibbs sampler to compute the posterior distribution $p
 The initialization is perfomed considering, as first value of $\sigma^2$ the true value, i.e., $\sigma = 0.1646$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
 
 Considering $N=10^4$ and $T=500$, we obtained the following marginal distributions:
+
+
+\newpage
+
+\section*{3.1 Predicting a relation based on Indian Buffet Process}
+Let us suppose that we observe the interactions between a set of entities and we wish to extract informative representations that are useful for making predictions about the entities and their relationships. One basic challenge is link prediction, where we observe the relationships (or “links”) between some pairs of entities in a network (or “graph”) and we try to predict unobserved links. 
+
+In our model, each entity is described by a set of binary features. We are not given these features a priori and will attempt to infer them. We assume that the probability of having a link from one entity to another is entirely determined by the combined effect of all pairwise feature interactions. If there are $K$ features, then let $Z$ be the $N \times K$ binary matrix where each row corresponds to an entity and each column corresponds to a feature such that
+$$ 
+z_{ik} \equiv Z(i,k) = 
+\begin{cases}
+	1 \text{\ \ \ if the $i^{th}$ entity has feature $k$} \\
+	0 \text{\ \ \ otherwise}
+\end{cases}
+$$
+Let $Z_i$ denote the feature vector corresponding to entity $i$.
+
+Let $W$ be a $K \times K$ real-valued weight matrix where $w_{kk'} \equiv W(k, k')$ is the weight that affects the probability of there being a link from entity $i$ to entity $j$ if both entity $i$ has feature $k$ and entity $j$ has feature $k'$.
+
+Then the likelihood is defined as follows:
+$$
+Pr(y_{ij}=1|Z,W) = \prod_{i,j}Pr(y_{ij}|Z_i,Z_j,W)
+$$
+Given the feature matrix $Z$ and the weight matrix $W$, the probability that there is a link from entity $i$ to entity $j$ is
+$$
+Pr(y_{ij}=1|Z,W) = \sigma(Z_iWZ_j^T) = \sigma(\sum_{k,k'}z_{ik}z{jk'}w_{kk'}) 
+$$
+where $\sigma(\cdot)$ is a function that transforms values on $(-\infty, \infty)$ to $(0,1)$ such as the sigmoid function $\sigma(x) = (1+e^{-x})^{-1}$.
+
+Given the full set of observations $X$, we wish to infer the posterior distribution of the feature matrix $Z$ and the weight $W$.
+
+Without any prior knowledge about the features or their weights, a natural prior for $W$ is given by 
+$$
+w_{kl} \sim \mathcal{N}(0,\sigma^2).
+$$
+
+We generate the feature matrix $Z$ using the Indian Buffet Process. Each row of $Z$ corresponds to a diner at an Indian buffet; each column corresponds to a dish at the infinitely long buffet. If a customer takes a particular dish, then the entry that corresponds to the customer's row and the dish's column is a 1, otherwise the entry is 0. The first customer chooses a $Poisson(\alpha)$ number of dishes to sample; the $i^{th}$ customer tries each previously sampled dish with probability proportional to the number of people that have already tried the dish and then samples a $Poisson(\frac{\alpha}{i})$ number of new dishes. 
+
+We do inference implementing a MCMC sampler. At each iteration, we have to:
+\begin{enumerate}
+	\item resample $Z$, given $W$;
+	\item resample $W$, given $Z$.
+\end{enumerate}
+
+\subsection*{Question 19}
+In the algorithm implementation that we provide, at first we create a binary feature matrix $Z$, using the Indian Buffet Process. As previously mentioned, The first customer chooses a $Poisson(\alpha)$ number of dishes to sample. Then, for each custumer $i$ we perform the following steps:
+\begin{enumerate}
+	\item [-] we compute the probability of visiting past dishes, given by $p = m_k/i$, where m is the number of customer that have already tried dish $k$;
+	\item[-] sampling from a uniform distribution $\mathcal{U}(0,1)$, we either accept and set $z_{i,k}=1$ or reject the proposal;
+	\item[-] we compute the number of new dishes visited by customer $i$, sampling from a $Poisson(\frac{\alpha}{i})$.
+\end{enumerate}
+Once $Z$ is built, we initialize the weight matrix $W$, using the fact that
+$$
+w_{kl} \sim \mathcal{N}(0,\sigma^2).
+$$
+Then, the MCMC sampler begins.
+\begin{enumerate}
+	\item To sample from the distribution defined by the IBP, we need to compute the conditional distribution $P(z_{ik}=1|Z_{-i,k})$, where $Z_{-i,k}$ denotes the entries of $Z$ other than $z_{ik}$. We have that
+	$$
+	P(z_{ik}=1|Z_{-i,k}) = \frac{m_{-i,k}+\frac{\alpha}{K}}{N+\frac{\alpha}{K}}
+	$$
+	where $m_{-i,k}$ is the number of customers that have tried dish $k$, not including $i$.
+	
+	So, for each column $k$ if $m_{-i,k}$  is greater than 0 we set $z_{ik}=1$ with probability given by the equation just stated. Otherwise, we delete that column. At the end of row $i$, we add $Poisson(\frac{\alpha}{N})$ new columns that have ones in that row. 
+	\item We sequentially resample each of the weights in $W$ that correspond to non-zero features (or dishes) and drop all weights that correspond to all-zero features. 
+	
+	We use a Metropolis-Hastings step for each weight in which we propose a new weight from a Normal distribution centered around the old one. Then, the probability of accepting $w_{new}$, when the current weight is $w_{old}$ is given by
+	\begin{align*}
+		a(w_{new}|w_{old}) & = \frac{p*(w_{new})}{p*(w_{old})} \frac{q(w_{old}|w_{new})}{q(w_{new}|w_{old})} \\
+		& = \frac{p(D|w_{new})p(w_{new})}{p(D|w_{old})p(w_{old})} \frac{q(w_{old}|w_{new})}{q(w_{new}|w_{old})} \\
+		& = \frac{\sum_{i,j}\sigma(z_{ik}z_{jk}w_{kk',new})}{\sum_{i,j}\sigma(z_{ik}z_{jk}w_{kk',old})}\frac{p(w_{new})}{p(w_{old})}\frac{q(w_{old}|w_{new})}{q(w_{new}|w_{old})}
+	\end{align*}
+	knowing that the prior over the weights is a $Gaussian$ centered in 0, with standard deviation $\sigma$, and the proposal of $w_{new}$ from $w_{old}$ is  $Gaussian$ centered in $w_{old}$, with standard deviation $\sigma$.
+ \end{enumerate}
+
+\subsection*{Question 20}
+Running the algorithm with inizial parameters $N = 10$, $\alpha = 10$, $\sigma=0.5$ we have the following results.
+\\
+\begin{center}
+	\includegraphics[width=8cm]{task7/output_initial_alpha10_sigma05.jpeg}
+\end{center}
+As initial setting, $K=22$. After performing the MCMC sampler, we obtain
+\\
+\begin{center}
+	\includegraphics[width=9cm]{task7/output_final_alpha10_sigma05.jpeg}
+\end{center}
+with $K=33$, using $10^3$ iterations for the sampling. 
 
 
 \end{document}

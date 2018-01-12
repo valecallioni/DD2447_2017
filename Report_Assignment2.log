@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  21 DEC 2017 16:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  12 JAN 2018 22:15
 entering extended mode
 **./Report_Assignment2.tex
 (Report_Assignment2.tex
@@ -210,91 +210,147 @@ Missing character: There is no Ô in font cmr10!
 Missing character: There is no ¨ in font cmr10!
 Missing character: There is no Å in font cmr10!
  [2] [3]
-<task1/SIS_N_100_T_500.jpeg, id=22, 614.295pt x 614.295pt>
-File: task1/SIS_N_100_T_500.jpeg Graphic file (type jpg)
+<task1/SIS_N_10000_T_500.jpeg, id=22, 614.295pt x 614.295pt>
+File: task1/SIS_N_10000_T_500.jpeg Graphic file (type jpg)
 
-<use task1/SIS_N_100_T_500.jpeg>
-Package pdftex.def Info: task1/SIS_N_100_T_500.jpeg used on input line 114.
+<use task1/SIS_N_10000_T_500.jpeg>
+Package pdftex.def Info: task1/SIS_N_10000_T_500.jpeg used on input line 114.
 (pdftex.def)             Requested size: 345.0pt x 345.0058pt.
- [4] [5 <./task1/SIS_N_100_T_500.jpeg>]
-<task1/SIR_N_100_T_500.jpeg, id=30, 614.295pt x 614.295pt>
-File: task1/SIR_N_100_T_500.jpeg Graphic file (type jpg)
-
-<use task1/SIR_N_100_T_500.jpeg>
-Package pdftex.def Info: task1/SIR_N_100_T_500.jpeg used on input line 146.
-(pdftex.def)             Requested size: 345.0pt x 345.0058pt.
-
-<task1/SIS_N_1000_T_500.jpeg, id=31, 614.295pt x 614.295pt>
-File: task1/SIS_N_1000_T_500.jpeg Graphic file (type jpg)
-
-<use task1/SIS_N_1000_T_500.jpeg>
-Package pdftex.def Info: task1/SIS_N_1000_T_500.jpeg used on input line 157.
-(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
-
-<task1/SIR_N_1000_T_500.jpeg, id=32, 614.295pt x 614.295pt>
+ [4] [5 <./task1/SIS_N_10000_T_500.jpeg>]
+<task1/SIR_N_1000_T_500.jpeg, id=30, 614.295pt x 614.295pt>
 File: task1/SIR_N_1000_T_500.jpeg Graphic file (type jpg)
 
 <use task1/SIR_N_1000_T_500.jpeg>
-Package pdftex.def Info: task1/SIR_N_1000_T_500.jpeg used on input line 158.
+Package pdftex.def Info: task1/SIR_N_1000_T_500.jpeg used on input line 146.
+(pdftex.def)             Requested size: 345.0pt x 345.0058pt.
+ [6]
+<task1/SIS_N_1000_T_500.jpeg, id=34, 614.295pt x 614.295pt>
+File: task1/SIS_N_1000_T_500.jpeg Graphic file (type jpg)
+
+<use task1/SIS_N_1000_T_500.jpeg>
+Package pdftex.def Info: task1/SIS_N_1000_T_500.jpeg used on input line 153.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+File: task1/SIR_N_1000_T_500.jpeg Graphic file (type jpg)
+ <use task1/SIR_N_1000_T_500.jpeg>
+Package pdftex.def Info: task1/SIR_N_1000_T_500.jpeg used on input line 154.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
 
-<task1/SIS_N_1000_T_100.jpeg, id=33, 614.295pt x 614.295pt>
-File: task1/SIS_N_1000_T_100.jpeg Graphic file (type jpg)
+<task1/SIS_N_500_T_500.jpeg, id=35, 614.295pt x 614.295pt>
+File: task1/SIS_N_500_T_500.jpeg Graphic file (type jpg)
 
-<use task1/SIS_N_1000_T_100.jpeg>
-Package pdftex.def Info: task1/SIS_N_1000_T_100.jpeg used on input line 163.
+<use task1/SIS_N_500_T_500.jpeg>
+Package pdftex.def Info: task1/SIS_N_500_T_500.jpeg used on input line 156.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
- [6] [7 <./task1/SIR_N_100_T_500.jpeg>]
-[8 <./task1/SIS_N_1000_T_500.jpeg> <./task1/SIR_N_1000_T_500.jpeg> <./task1/SIS
-_N_1000_T_100.jpeg>] [9]
-<task3/V_6_T_6_N_1000.png, id=48, 462.528pt x 346.896pt>
+
+<task1/SIR_N_500_T_500.jpeg, id=36, 614.295pt x 614.295pt>
+File: task1/SIR_N_500_T_500.jpeg Graphic file (type jpg)
+
+<use task1/SIR_N_500_T_500.jpeg>
+Package pdftex.def Info: task1/SIR_N_500_T_500.jpeg used on input line 157.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task1/SIS_N_1000_T_300.jpeg, id=37, 614.295pt x 614.295pt>
+File: task1/SIS_N_1000_T_300.jpeg Graphic file (type jpg)
+
+<use task1/SIS_N_1000_T_300.jpeg>
+Package pdftex.def Info: task1/SIS_N_1000_T_300.jpeg used on input line 159.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task1/SIR_N_1000_T_300.jpeg, id=38, 614.295pt x 614.295pt>
+File: task1/SIR_N_1000_T_300.jpeg Graphic file (type jpg)
+
+<use task1/SIR_N_1000_T_300.jpeg>
+Package pdftex.def Info: task1/SIR_N_1000_T_300.jpeg used on input line 160.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+ [7 <./task1/SIR_N_1000_T_500.jpeg>] [8 <./task1/SIS_N_1000_T_500.jpeg> <./task
+1/SIS_N_500_T_500.jpeg> <./task1/SIR_N_500_T_500.jpeg> <./task1/SIS_N_1000_T_30
+0.jpeg> <./task1/SIR_N_1000_T_300.jpeg>]
+[9] <task3/V_6_T_6_N_1000.png, id=50, 462.528pt x 346.896pt>
 File: task3/V_6_T_6_N_1000.png Graphic file (type png)
 
 <use task3/V_6_T_6_N_1000.png>
-Package pdftex.def Info: task3/V_6_T_6_N_1000.png used on input line 219.
+Package pdftex.def Info: task3/V_6_T_6_N_1000.png used on input line 215.
 (pdftex.def)             Requested size: 265.55629pt x 199.16928pt.
  [10]
-<task3/V_6_T_6_N_1000_Node1.png, id=54, 462.528pt x 346.896pt>
+<task3/V_6_T_6_N_1000_Node1.png, id=56, 462.528pt x 346.896pt>
 File: task3/V_6_T_6_N_1000_Node1.png Graphic file (type png)
 
 <use task3/V_6_T_6_N_1000_Node1.png>
-Package pdftex.def Info: task3/V_6_T_6_N_1000_Node1.png used on input line 238.
+Package pdftex.def Info: task3/V_6_T_6_N_1000_Node1.png used on input line 234.
 
 (pdftex.def)             Requested size: 257.96938pt x 193.47882pt.
  [11 <./task3/V_6_T_6_N_1000.png> <./task3/V_6_T_6_N_1000_Node1.png>]
-<task3/V_6_T_6_N_10000.png, id=60, 462.528pt x 346.896pt>
+<task3/V_6_T_6_N_10000.png, id=62, 462.528pt x 346.896pt>
 File: task3/V_6_T_6_N_10000.png Graphic file (type png)
 
 <use task3/V_6_T_6_N_10000.png>
-Package pdftex.def Info: task3/V_6_T_6_N_10000.png used on input line 242.
+Package pdftex.def Info: task3/V_6_T_6_N_10000.png used on input line 238.
 (pdftex.def)             Requested size: 265.55629pt x 199.16928pt.
 
-<task3/V_6_T_6_N_10000_Gibbs.png, id=61, 925.056pt x 450.2421pt>
+<task3/V_6_T_6_N_10000_Gibbs.png, id=63, 925.056pt x 450.2421pt>
 File: task3/V_6_T_6_N_10000_Gibbs.png Graphic file (type png)
 
 <use task3/V_6_T_6_N_10000_Gibbs.png>
-Package pdftex.def Info: task3/V_6_T_6_N_10000_Gibbs.png used on input line 272
+Package pdftex.def Info: task3/V_6_T_6_N_10000_Gibbs.png used on input line 268
 .
 (pdftex.def)             Requested size: 345.0pt x 167.91977pt.
  [12 <./task3/V_6_T_6_N_10000.png>]
-<task3/V_6_T_6_N_10000_Blocked_Gibbs.png, id=66, 462.528pt x 346.896pt>
+<task3/V_6_T_6_N_10000_Blocked_Gibbs.png, id=68, 462.528pt x 346.896pt>
 File: task3/V_6_T_6_N_10000_Blocked_Gibbs.png Graphic file (type png)
 
 <use task3/V_6_T_6_N_10000_Blocked_Gibbs.png>
 Package pdftex.def Info: task3/V_6_T_6_N_10000_Blocked_Gibbs.png used on input 
-line 282.
+line 278.
 (pdftex.def)             Requested size: 227.6217pt x 170.71652pt.
  [13 <./task3/V_6_T_6_N_10000_Gibbs.png> <./task3/V_6_T_6_N_10000_Blocked_Gibbs
 .png>] [14]
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+ [15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 391--393
+
+ []
+
+<task7/output_initial_alpha10_sigma05.jpeg, id=85, 614.295pt x 614.295pt>
+File: task7/output_initial_alpha10_sigma05.jpeg Graphic file (type jpg)
+
+<use task7/output_initial_alpha10_sigma05.jpeg>
+Package pdftex.def Info: task7/output_initial_alpha10_sigma05.jpeg used on inpu
+t line 394.
+(pdftex.def)             Requested size: 227.62204pt x 227.62303pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--398
+
+ []
+
+<task7/output_final_alpha10_sigma05.jpeg, id=86, 614.295pt x 614.295pt>
+File: task7/output_final_alpha10_sigma05.jpeg Graphic file (type jpg)
+
+<use task7/output_final_alpha10_sigma05.jpeg>
+Package pdftex.def Info: task7/output_final_alpha10_sigma05.jpeg used on input 
+line 399.
+(pdftex.def)             Requested size: 256.0748pt x 256.07121pt.
+ [17 <./task7/output_initial_alpha10_sigma05.jpeg>] [18 <./task7/output_final_a
+lpha10_sigma05.jpeg>]
 (Report_Assignment2.aux) ) 
 Here is how much of TeX's memory you used:
- 3235 strings out of 493323
- 49014 string characters out of 3139069
+ 3256 strings out of 493323
+ 49743 string characters out of 3139069
  116388 words of memory out of 3000000
- 6744 multiletter control sequences out of 15000+200000
+ 6760 multiletter control sequences out of 15000+200000
  10686 words of font info for 38 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,9n,39p,672b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,12n,39p,672b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pf
@@ -306,11 +362,12 @@ s/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
 fonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Report_Assignment2.pdf (14 pages, 992519 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on Report_Assignment2.pdf (18 pages, 1371358 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
+ 140 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 
