@@ -167,6 +167,338 @@ From Figure 3, we observe that for smaller values of T we have a smaller varianc
 
 \newpage
 
+
+
+\section*{2.2 MCMC for the stochastic volatility model}
+We will now describe an MCMC sampler for the stochastic volatility model.
+
+1. A time index t is fist sampled uniformly in $\{0, ... , T\}$.
+
+2. Sample $x_t$ from the conditional distribution $p(x_t \mid \theta, x_{0:t-1}, x_{t+1:T},y_{1:T})$, which is given, up to a normalizing constant, by the likelihood function
+
+$ p(x_{0:T}, y_{1:T} \mid \theta) = $
+
+$ \mathcal{N}( x_0 \mid 0, \frac{\sigma^2}{1- \phi^2}) \sum_{t=1}^T [ \mathcal{N}(x_t \mid \phi x_{t-1},\sigma^2 ) \mathcal{N}(y_t \mid 0, \beta^2 exp(x_t))] 
+$
+
+In order to sample $x_t$, use a Metropolis-Hastings sampler characterized by one of the following proposal sampling densities $g_t(x_t' \mid x_t)$ each chosen with probability $1/3$:
+
+1. If $t>0$, sample $ v_n \sim \mathcal{N}(v_n \mid 0,1)$ and set $ x_t' = \phi x_{t-1} + \sigma v_n $ . Otherwise, sample $ x_0' \sim \mathcal{N}(x_0' \mid 0, \frac{\sigma^2}{1- \phi^2})$ .
+2. If $t<T$, sample $ v_n \sim \mathcal{N}(v_n \mid 0,1)$ and set $ x_t' = \frac{x_{t+1} - \sigma v_n}{\phi} $ . Otherwise, set $ x_T' = x_T$ .
+3. If $t>0$, sample $ w_n \sim \mathcal{N}(w_n \mid 0,1)$ and set $ x_t' = 2 log(\frac{|y_t|}{\beta |w_n|}) $ . Otherwise, set $ x_0' = x_0$ .
+
+
+
+\subsection*{Question 8}
+In this task we use Markov Chain Monte Carlo (MCMC) method to generate samples for the distribution $p(x_{0:T}, y_{1:T} \mid \theta)$. In general, the method starts by constructing a Markov chain whose stationary distribution is the target density of interest. 
+
+MCMC method of choice is the Metropolis Hastings algorithm.
+Apart from the distribution we want to sample, the algorithm requires another proposal distribution $g(\mathbf{x'} \mid \mathbf{x})$.
+
+
+Having defined the proposal distribution we start by randomly initializing the initial state $\mathbf{x_0}$. Then we sample a new time step $ t \sim U(0,T)$ which denotes the time step of the stochastic volatility model we sample (not the Monte Carlo time step). 
+
+Next we sample a new $x' \sim g(x' \mid x)$ and compute the acceptance probability $ \alpha = \frac{ \widetilde{p}(x')g(x \mid x') }{  \widetilde{p}(x)g(x' \mid x) }$. If the ratio is higher than one the next state has a higher probability than the previous one and we will always take it, therefore the new acceptance probability is set to 1. Otherwise we want to encourage exploration around the state and we consider taking the next state with the probability $\alpha$.  
+
+\subsubsection*{Initialisation}
+
+The initial state $\mathbf{x_0}$ needs to have a non-zero probability. If this condition isn't met there might be problems with computing the acceptance probability, if the denominator probability is zero acceptance probability is infinite, but that could be reported as a runtime error depending on the programming language and machine we use. The other possibility is that the proposed new state is still in the zero-probability area which would cause a case of $\frac{0}{0}$. Therefore we use Tensorflow framework for function optimization using directed graphs with automatic operation differentiation. We build the computational graph for function:
+
+$ p(x_{0:T}, y_{1:T} \mid \theta) = $
+
+$ \mathcal{N}( x_0 \mid 0, \frac{\sigma^2}{1- \phi^2}) \sum_{t=1}^T [ \mathcal{N}(x_t \mid \phi x_{t-1},\sigma^2 ) \mathcal{N}(y_t \mid 0, \beta^2 exp(x_t))] 
+$
+
+Initialise a random initial state $x_{0:T}$ and use a stochastic gradient descent algorithm to find the **MAP** estimation for the given data $y_{1:T}$.
+
+\subsubsection*{Modeling the proposal density}
+
+Since we are given three different proposal sampling densities, each having the same probability of being chosen, we can construct the following Mixture proposal. We can interpret this as marginalization of a discrete random variable $I$ over three possible classes, one for each function:
+
+$$ g(x' \mid x) = \sum_{k=1}^3 g(x' \mid x, I=i) p(I=i) $$
+
+where $p(I=i)=\frac{1}{3}$ for $ k \in \{ 1,2,3 \}$. 
+
+We then write $ g(x' \mid x, I=i) $ as :
+
+$$ g(x' \mid x, I=i) = g^1(x' \mid x)  \mathbf{1}_{i==1} + g^2(x' \mid x)  \mathbf{1}_{i==2} + g^3(x' \mid x)  \mathbf{1}_{i==3}  $$
+
+where $\mathbf{1}_{L}$ is the indicator function witch results in $1$ if $L$ is true, and in $0$ otherwise. 
+
+Each of $g^i(x' \mid x)$ is a probability density function for the next state $x'$. They are defined as functions of model parameters $\Theta = \{ \sigma, \phi, \beta \}$, predictions $y_{1:T}$, latent variables $x_{0:T}$ and random variables $v_n$ and $w_n$. Therefore, in order to sample from the proposal distribution it is necessary to use the change-of-variable rule for computing the right probability density function and cumulative distribution function needed for the inverse probability transform method of sampling. 
+
+We start with the pdf $g^1(x' \mid x)$. If the selected time step $ t \sim U(0,T)$ turns out to be $0$ we sample from the normal distribution $\mathcal{N}(x_0' \mid 0, \frac{\sigma^2}{1-\phi^2})$. Otherwise we obtain $x_t'$ as:
+
+$$ x_t' = \phi x_{t-1} + \sigma v_n , \quad v_n \sim \mathcal{N}(v_n \mid 0,1) $$
+
+The change-of-variable rule is defined as:
+
+$$ f_Y(y) = \left | \frac{d}{dy} h^{-1}(y) \right | f_X(h^{-1}(y)) \quad \forall y \in g(X)$$
+
+Inverse transformation is:
+
+$$ v_n(x_t') = \frac{1}{\sigma} ( x_t' - \phi x_{t-1})$$
+
+The derivative is :
+
+$$ \frac{d}{d x_t'} v_n(x_t') = \frac{1}{\sigma} $$
+
+And with:
+
+$$  f_{V_n}( x ) = \sqrt{\frac{2}{\pi}} exp\{ -\frac{x^2}{2} \} $$
+
+We obtain:
+
+$$ f_{X_t'}(x_t') = \left | \frac{d}{dx_t'} v_n(x_t') \right | f_{V_n}(v_n(x_t')) $$
+
+$$ f_{X_t'}(x_t') = \frac{1}{\sigma} \sqrt{\frac{2}{\pi}} exp\{ -\frac{(\frac{1}{\sigma} ( x_t' - \phi x_{t-1}))^2}{2} \} $$
+
+$$ f_{X_t'}(x_t') = \frac{1}{\sqrt{2 \pi \sigma}} exp\{ -\frac{( x_t' - \phi x_{t-1})^2}{2 \sigma^2} \} $$
+
+$$ f_{X_t'}(x_t') = \mathcal{N}(x_t' \mid \phi x_{t-1}, \sigma^2) $$
+
+As we have proven, the transformed pdf is also a normal distribution with just a different set of parameters. Rewriting to original notation:
+
+$$ g^1(x' \mid x) = \mathcal{N}(x_t' \mid \phi x_{t-1}, \sigma^2) $$
+
+Putting it all together:
+
+\begin{equation}
+g^1(x' \mid x)=
+\begin{cases}
+\mathcal{N}(x_0' \mid 0, \frac{\sigma^2}{1-\phi^2}), & \text{if}\ t=0 \\
+\mathcal{N}(x_t' \mid \phi x_{t-1}, \sigma^2) , & \text{otherwise}
+\end{cases}
+\end{equation}
+
+$$ f_{X_t'}(x_t') =  \frac{1}{ \sqrt{2 \pi \frac{\sigma^2}{\phi^2} }} exp\{ -\frac{ (\frac{x_{t+1} - \phi x_t'}{\sigma})^2}{2} \}$$
+
+$$ f_{X_t'}(x_t') =  \frac{1}{ \sqrt{2 \pi \frac{\sigma^2}{\phi^2} }} exp\{ -\frac{ ( x_t' - \frac{x_{t+1}}{\phi} )^2}{2 \frac{\phi^2}{\sigma^2}} \}$$
+
+$$ f_{X_t'}(x_t') = \mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}) $$
+
+
+$$ g^2(x' \mid x) = \mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}) $$
+
+
+
+Then, the second case also considers two different distribution with respect to $t \sim U(0,T)$. If the $t = T$ then we just copy the last value to the next: $x_T' = x_T$ .
+Analogous to the first case, the second case will have: 
+
+$$ x_t' =  \frac{( x_{t+1} + \sigma v_n)}{\phi}  , \quad v_n \sim \mathcal{N}(v_n \mid 0,1) $$
+
+Inverse transformation is:
+
+$$ v_n(x_t') = \frac{x_{t+1} - \phi x_t'}{\sigma}  $$
+
+The derivative is :
+
+$$ \frac{d}{d x_t'} v_n(x_t') = -\frac{\phi}{\sigma} $$
+
+And with:
+
+$$  f_{V_n}( x ) = \sqrt{\frac{2}{\pi}} exp\{ -\frac{x^2}{2} \} $$
+
+We obtain:
+
+$$ f_{X_t'}(x_t') = \left | \frac{d}{dx_t'} v_n(x_t') \right | f_{V_n}(v_n(x_t')) $$
+
+$$ f_{X_t'}(x_t') = \left | -\frac{\phi}{\sigma} \right | \sqrt{\frac{2}{\pi}} exp\{ -\frac{ (\frac{x_{t+1} - \phi x_t'}{\sigma})^2}{2} \}$$
+
+$$ f_{X_t'}(x_t') =  \frac{1}{ \sqrt{2 \pi \frac{\sigma^2}{\phi^2} }} exp\{ -\frac{ (\frac{x_{t+1} - \phi x_t'}{\sigma})^2}{2} \}$$
+
+$$ f_{X_t'}(x_t') =  \frac{1}{ \sqrt{2 \pi \frac{\sigma^2}{\phi^2} }} exp\{ -\frac{ ( x_t' - \frac{x_{t+1}}{\phi} )^2}{2 \frac{\phi^2}{\sigma^2}} \}$$
+
+$$ f_{X_t'}(x_t') = \mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}) $$
+
+
+$$ g^2(x' \mid x) = \mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}) $$
+
+
+
+\begin{equation}
+g^2(x' \mid x)=
+\begin{cases}
+\mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}), & \text{if}\ t<T \\
+x_T , & \text{otherwise}
+\end{cases}
+\end{equation}
+
+Finally for the third function we have the flowing rules. If the sampled $t \sim U(0,T)$ is equal to $0$ we set $x_0' = x_0$. Otherwise we have the following function:
+
+$$ x_t' =  2 log(\frac{|y_t|}{\beta |w_n|})  , \quad w_n \sim \mathcal{N}(w_n \mid 0,1) $$
+
+Inverse transformation is:
+
+$$ w_n(x_t') = \left| \frac{|y_t|}{\beta} exp \{ - \frac{x_t'}{2}\} \right | $$
+
+Which is positive on the whole domain so we can exclude the absolute function ( $y_t$ is already required to be absolute and $beta>0$ by definition).
+
+
+The derivative is :
+
+$$ \frac{d}{d x_t'} w_n(x_t') = -\frac{y_t}{2\beta} exp \{ - \frac{x_t'}{2}\} $$
+
+And with:
+
+$$  f_{|W_n|}( x ) = \frac{2}{\sqrt{2 \pi}}  exp\{ -\frac{x^2}{2} \} \quad \forall x \in [0,\inf)$$
+
+Note that here our interval is restricted to only positive numbers, so therefore we need to correct for it in the pdf by multiplying the current value with $2$.
+
+We obtain:
+
+$$ f_{X_t'}(x_t') = \left | \frac{d}{dx_t'} w_n(x_t') \right | f_{W_n}(w_n(x_t')) $$
+
+$$ f_{X_t'}(x_t') = \left | -\frac{y_t}{2\beta} exp \{ - \frac{x_t'}{2}\} \right | \frac{2}{\sqrt{2 \pi}}  exp\{ -\frac{(\frac{y_t}{\beta} exp \{ - \frac{x_t'}{2}\})^2}{2} \} $$
+
+$$ f_{X_t'}(x_t') = \frac{|y_t|}{\beta \sqrt{2 \pi}} exp \bigg\{ -\frac{|y_t|^2}{2 \beta^2} exp\{-x_t' \} - \frac{x_t'}{2} \bigg\} $$
+
+
+\begin{equation}
+g^3(x' \mid x)=
+\begin{cases}
+x_0, & \text{if}\ t=0 \\
+\frac{|y_t|}{\beta \sqrt{2 \pi}} exp \bigg\{ -\frac{|y_t|^2}{2 \beta^2} exp\{-x_t' \} - \frac{x_t'}{2} \bigg\}, & \text{otherwise}
+\end{cases}
+\end{equation}
+
+All relevant equations, side by side :
+
+$$ g(x' \mid x) = \sum_{k=1}^3 g(x' \mid x, I=i) p(I=i) $$
+
+---
+
+$$ g(x' \mid x, I=i) = g^1(x' \mid x)  \mathbf{1}_{i==1} + g^2(x' \mid x)  \mathbf{1}_{i==2} + g^3(x' \mid x)  \mathbf{1}_{i==3}  $$
+
+---
+
+\begin{equation}
+g^1(x' \mid x)=
+\begin{cases}
+\mathcal{N}(x_0' \mid 0, \frac{\sigma^2}{1-\phi^2}), & \text{if}\ t=0 \\
+\mathcal{N}(x_t' \mid \phi x_{t-1}, \sigma^2) , & \text{otherwise}
+\end{cases}
+\end{equation}
+
+---
+
+\begin{equation}
+g^2(x' \mid x)=
+\begin{cases}
+\mathcal{N}(x_t' \mid \frac{x_{t+1}}{\phi}, \frac{\phi^2}{\sigma^2}), & \text{if}\ t<T \\
+x_T , & \text{otherwise}
+\end{cases}
+\end{equation}
+
+---
+
+\begin{equation}
+g^3(x' \mid x)=
+\begin{cases}
+x_0, & \text{if}\ t=0 \\
+\frac{|y_t|}{\beta \sqrt{2 \pi}} exp \bigg\{ -\frac{|y_t|^2}{2 \beta^2} exp\{-x_t' \} - \frac{x_t'}{2} \bigg\}, & \text{otherwise}
+\end{cases}
+\end{equation}
+
+
+\subsubsection*{Acceptance probability}
+
+Acceptance probability is given by the ratio:
+
+$$ \alpha = \frac{ \widetilde{p}(x')g(x \mid x') }{  \widetilde{p}(x)g(x' \mid x) }$$
+
+which can be simplified to :
+
+$$ \alpha = \frac{ \widetilde{p}(x')}{  \widetilde{p}(x) }$$
+
+if the proposal distribution is symmetrical. If it is not symmetrical we need to maintain detailed balance (reversibility) of the stationary distribution by including the ratio between proposal distribution probabilities of the previous state and the next state. 
+
+We know that there normal distributions are always symmetric so we only check for the last equation.
+
+By definition, a probability distribution is said to be symmetric if and only if there exists a value $x_0$ such that 
+$$ f(x_0 - \delta) = f(x_0 + \delta) \quad \forall \delta \in I\!R$$
+
+From there with $\frac{|y_t|}{\sqrt{2 \pi \beta^2}} = C_1$ and $ \frac{|y_t|^2}{2 \beta^2} = C_2 $:
+
+$$ C_1 * exp \bigg\{ -C_2 * exp\{-(x_0 - \delta) \} - \frac{x_0 - \delta}{2} \bigg\}  = C_1 * exp \bigg\{ -C_2 * exp\{-(x_0 + \delta) \} - \frac{x_0 + \delta}{2} \bigg\}$$
+
+$$ -C_2 * exp\{-(x_0 - \delta) \} - \frac{x_0 - \delta}{2} = -C_2 * exp\{-(x_0 + \delta) \} - \frac{x_0 + \delta}{2} $$
+
+
+$$ -C_2 * exp\{-(x_0 - \delta) \} + C_2 * exp\{-(x_0 + \delta) \} =  - \frac{x_0 + \delta}{2} + \frac{x_0 - \delta}{2}  $$
+
+$$ C_2 *  e^{-x_0} ( e^{ \delta} - e^{ -\delta } ) = \delta $$
+
+
+$$ e^{-x_0}  =  \frac{\delta}{C_2( e^{ \delta} - e^{ -\delta } )} $$
+$$ x_0 =  - log(\frac{\delta}{C_2( e^{ \delta} - e^{ -\delta } )} ) $$
+$$ x_0 =  log(\frac{C_2( e^{\delta } - e^{ \delta}   )}{ \delta} ) $$
+
+$$ x_0 =  log\Big( \frac{|y_t|^2}{2 \beta^2} \frac{( e^{ \delta} - e^{ -\delta }   )}{ \delta} \Big) $$
+
+The logarithmic function is defined only for non-negative number, therefore:
+
+$$ \frac{( e^{ \delta} - e^{ -\delta }   )}{ \delta} > 0 $$ 
+
+$$ ( e^{ \delta} - e^{ -\delta } > 0 \land \delta >0 ) \lor ( e^{ \delta} - e^{ -\delta } < 0 \land \delta <0 )$$
+
+
+In the first case, if $\delta >0$ then $ e^\delta > e^{-\delta} $ is always true. Analogous is true for the second equation, if the $\delta <0$ then $ e^\delta < e^{-\delta} $ and therefore we can conclude that the given probability density function is symmetric.
+
+$$\frac{|y_t|}{\beta \sqrt{2 \pi}} exp \bigg\{ -\frac{|y_t|^2}{2 \beta^2} exp\{-x_t' \} - \frac{x_t'}{2} \bigg\}$$
+
+\subsubsection*{Experiments}
+
+
+\newpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section*{2.3 MCMC for the train}
 We are given a problem that models a railway with a single train. The map of the tracks is represented by an undirected graph $G=(V,E)$, such that each node has degree 3 and at each vertex edges are labeled $0, L or R$. Each vertex represents a switch: if the train comes from the direction of $L$ or $R$, it always leaves in the direction 0; if the train comes from the direction $0$, it will leave in either direction $L$ or $R$, depending on the state of the switch. The switch has prior probability 1/2 for each direction, but will remain the same throughout the train run. A switch setting is a function $\alpha : V(G) \rightarrow \{L,R\}$
 
