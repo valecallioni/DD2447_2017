@@ -6,7 +6,7 @@
 
 % Title Page
 \title{Statistical Methods in \\ Applied Computer Science, Fall 2017 \\ Assignment 2}
-\author{Valeria Callioni, Viran Ribic - \\ Assignment 2 Group 3}
+\author{Valeria Callioni, Viran Ribi\'c , \\ Assignment 2 Group 3}
 
 
 \begin{document}
@@ -289,17 +289,17 @@ In our sampling algorithms we do not need to sample the stop position $s$ for th
 \section*{2.5 Stochastic volatility unknown parameter}
 Let us consider the problem presented in task 2.1. Now, we assume that the variance parameters $\sigma$ and $\beta$ are both unknown, while $\phi$ is given. The Bayesian setting is characterized by the priors:
 $$
-\sigma^2 \sim \mathit{IG}(a=0.01, b=0.01)
+\sigma^2 \sim \mathcal{IG}(a=0.01, b=0.01)
 $$
 $$
-\beta^2 \sim \mathit{IG}(a=0.01, b=0.01)
+\beta^2 \sim \mathcal{IG}(a=0.01, b=0.01)
 $$
 Then, we obtain the posterior distributions of the variance parameters in closed form:
 $$
-p(\sigma^2|\phi, x_{0:T}, y_{1:T}) = \mathit{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}(x_t-\phi x_{t-1})^2)
+p(\sigma^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}(x_t-\phi x_{t-1})^2)
 $$
 $$
-p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathit{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)
+p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)
 $$
 
 \subsection*{Question 13}
@@ -309,14 +309,30 @@ We implemented a particle Gibbs sampler to compute the posterior distribution $p
 	\item[-] $p(\beta^2|\phi, x_{0:T}, y_{1:t})$
 	\item[-] $p(x_{0:T}|\theta, y_{1:T})$
 \end{enumerate}
-The initialization is perfomed considering, as first value of $\sigma^2$ the true value, i.e., $\sigma = 0.1646$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
+The initialization is perfomed considering, as first value of $\sigma$ the true value, i.e., $\sigma = 0.1315$. In this problem, $\phi = 0.9709$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
 
-Considering $N=10^4$ and $T=500$, we obtained the following marginal distributions:
+Considering $N=10^4$ and $T=500$, with a $burn-in$ fase of 5000 iterations, we obtained the following marginal distributions for the variance parameters:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_sigma2.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_beta2.jpeg}
+\end{center}
 
+
+\subsection*{Question 14}
+We tried to implement a Particle MCMC sampler for this model, by reusing the SMC implemented in 2.1, now modiﬁed to become a Conditional SMC. 
+
+Our implementation works as follows: first we initialize $\sigma$ and $\beta$ to their correct values; then we initialize $x_{0:T}$ using the distributions given in task 2.1; we perform once the SMC (with resampling), to have a $(T+1) \times N$ matrix, that we need for the Conditional Sequential Monte Carlo.
+
+The sampling part has the following steps:
+\begin{enumerate}
+	\item we sample $\sigma^2$ from $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$;
+	\item we sample $x_{0:T}$ running again the SMC algorithm, where  the $N^{th}$ particle's path is unchanged, with respect to the first SMC that we run. The sampling is performed by picking a random index $j$ in $\{1,...,N-1\}$ and considering the path of the $j^{th}$ particle;
+	\item we sample $\beta^2$ from $p(\beta^2|\phi, x_{0:T}, y_{1:t})$.
+\end{enumerate}
 
 \newpage
 
-\section*{3.1 Predicting a relation based on Indian Buffet Process}
+\section*{3.2 Predicting a relation based on Indian Buffet Process}
 Let us suppose that we observe the interactions between a set of entities and we wish to extract informative representations that are useful for making predictions about the entities and their relationships. One basic challenge is link prediction, where we observe the relationships (or “links”) between some pairs of entities in a network (or “graph”) and we try to predict unobserved links. 
 
 In our model, each entity is described by a set of binary features. We are not given these features a priori and will attempt to infer them. We assume that the probability of having a link from one entity to another is entirely determined by the combined effect of all pairwise feature interactions. If there are $K$ features, then let $Z$ be the $N \times K$ binary matrix where each row corresponds to an entity and each column corresponds to a feature such that
@@ -391,15 +407,43 @@ Then, the MCMC sampler begins.
 Running the algorithm with inizial parameters $N = 10$, $\alpha = 10$, $\sigma=0.5$ we have the following results.
 \\
 \begin{center}
-	\includegraphics[width=8cm]{task7/output_initial_alpha10_sigma05.jpeg}
+	\includegraphics[width=8cm]{task7/output_initial_alpha10_sigma05_N10.jpeg}
 \end{center}
-As initial setting, $K=22$. After performing the MCMC sampler, we obtain
+As initial setting, $K=23$. After performing the MCMC sampler, we obtain
 \\
 \begin{center}
-	\includegraphics[width=9cm]{task7/output_final_alpha10_sigma05.jpeg}
+	\includegraphics[width=9cm]{task7/output_final_alpha10_sigma05_N10.jpeg}
 \end{center}
-with $K=33$, using $10^3$ iterations for the sampling. 
+with $K=31$, using $10^3$ iterations for the sampling. 
 
+
+\subsection*{Question 21}
+Considering more customers, for instance $N=20$, our algorithm provides the following results.
+
+As initial setting we have $K=37$. Initial and final feature matrices are:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task7/output_initial_alpha10_sigma05_N20.jpeg}
+	\includegraphics[width=.4\textwidth]{task7/output_final_alpha10_sigma05_N20.jpeg}
+\end{center}
+After the MCMC sampler we end up with $K=34$ features.
+
+Varying the number of data points in the IBP slightly increases the number of clusters. This is because every extra data point (customer) gives the matrix another chance to add more features (dishes) from the distribution $Poisson(\frac{\alpha}{N})$.
+
+Considering different values of $\alpha$, for instance $\alpha=5$, we have:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task7/output_initial_alpha5_sigma05_N15.jpeg}
+	\includegraphics[width=.4\textwidth]{task7/output_final_alpha5_sigma05_N15.jpeg}
+\end{center}
+and we end up with $K=19$.
+
+Setting $\alpha=15$, we have:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task7/output_initial_alpha15_sigma05_N15.jpeg}
+	\includegraphics[width=.4\textwidth]{task7/output_final_alpha15_sigma05_N15.jpeg}
+\end{center}
+We started with $K=43$ and ended up with $K=67$ features.
+
+We can conclude by saying that  $\alpha$ directly controls the total number of features and how readily features are added to the generated data. This is due to the fact that the number of new dishes added by the $i^{th}$ customer during the MCMC sampler is drawn directly from a $Poisson$ distribution parameterized by $\alpha$.
 
 \end{document}
 
