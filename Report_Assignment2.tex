@@ -309,7 +309,7 @@ We implemented a particle Gibbs sampler to compute the posterior distribution $p
 	\item[-] $p(\beta^2|\phi, x_{0:T}, y_{1:t})$
 	\item[-] $p(x_{0:T}|\theta, y_{1:T})$
 \end{enumerate}
-The initialization is perfomed considering, as first value of $\sigma$ the true value, i.e., $\sigma = 0.1315$. In this problem, $\phi = 0.9709$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
+The initialization is perfomed considering as first value of $\sigma$ the true value, i.e., $\sigma = 0.1315$. In this problem, $\phi = 0.9709$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
 
 Considering $N=10^4$ and $T=500$, with a $burn-in$ fase of 5000 iterations, we obtained the following marginal distributions for the variance parameters:
 \begin{center}
@@ -319,9 +319,9 @@ Considering $N=10^4$ and $T=500$, with a $burn-in$ fase of 5000 iterations, we o
 
 
 \subsection*{Question 14}
-We tried to implement a Particle MCMC sampler for this model, by reusing the SMC implemented in 2.1, now modiﬁed to become a Conditional SMC. 
+We tried to implement a Particle MCMC sampler for this model, by reusing the SMC implemented in 2.1, now modifed to become a Conditional SMC. 
 
-Our implementation works as follows: first we initialize $\sigma$ and $\beta$ to their correct values; then we initialize $x_{0:T}$ using the distributions given in task 2.1; we perform once the SMC (with resampling), to have a $(T+1) \times N$ matrix, that we need for the Conditional Sequential Monte Carlo.
+Our implementation works as follows: first we initialize $\sigma$ and $\beta$ to their correct values; then we initialize $x_{0:T}$ using the distributions given in task 2.1; we perform once the SMC (with resampling), and the output is a $(T+1) \times N$ matrix, that we need for the Conditional Sequential Monte Carlo.
 
 The sampling part has the following steps:
 \begin{enumerate}
@@ -330,7 +330,31 @@ The sampling part has the following steps:
 	\item we sample $\beta^2$ from $p(\beta^2|\phi, x_{0:T}, y_{1:t})$.
 \end{enumerate}
 
+We obtained the following marginal distributions for the variance parameters:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_sigma2.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_beta2.jpeg}
+\end{center}
+
+\subsection*{Question 15}
+As we can notice from the plots, our implementation does not work properly, since the marginal distributions provided are not the same. 
+
+Anyway, we provide the convergence rates for the two methods.
+
+Using Gibbs sampler, we obtain a trace that suits the one of an $Inverse Gamma$ for $\sigma^2$, but the one of $\beta^2$ corresponds to a $Gaussian$, as we can see in the following plots.
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_sigma2_convergence.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_beta2_convergence.jpeg}
+\end{center}
+
+Using CSMC, we obtain
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_sigma2_convergence.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_beta2_convergence.jpeg}
+\end{center}
+
 \newpage
+
 
 \section*{3.2 Predicting a relation based on Indian Buffet Process}
 Let us suppose that we observe the interactions between a set of entities and we wish to extract informative representations that are useful for making predictions about the entities and their relationships. One basic challenge is link prediction, where we observe the relationships (or “links”) between some pairs of entities in a network (or “graph”) and we try to predict unobserved links. 

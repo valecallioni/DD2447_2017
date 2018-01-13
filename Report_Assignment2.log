@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  13 JAN 2018 13:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  13 JAN 2018 19:22
 entering extended mode
 **./Report_Assignment2.tex
 (Report_Assignment2.tex
@@ -317,10 +317,60 @@ File: task5/Gibbs_beta2.jpeg Graphic file (type jpg)
 <use task5/Gibbs_beta2.jpeg>
 Package pdftex.def Info: task5/Gibbs_beta2.jpeg used on input line 317.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
-Missing character: There is no Ô in font cmr10!
-Missing character: There is no ¨ in font cmr10!
-Missing character: There is no Å in font cmr10!
- [14 <./task5/Gibbs_sigma2.jpeg> <./task5/Gibbs_beta2.jpeg>] [15]
+ [14 <./task5/Gibbs_sigma2.jpeg> <./task5/Gibbs_beta2.jpeg>] <task5/CSMC_sigma2
+.jpeg, id=80, 614.295pt x 614.295pt>
+File: task5/CSMC_sigma2.jpeg Graphic file (type jpg)
+
+<use task5/CSMC_sigma2.jpeg>
+Package pdftex.def Info: task5/CSMC_sigma2.jpeg used on input line 335.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task5/CSMC_beta2.jpeg, id=81, 614.295pt x 614.295pt>
+File: task5/CSMC_beta2.jpeg Graphic file (type jpg)
+
+<use task5/CSMC_beta2.jpeg>
+Package pdftex.def Info: task5/CSMC_beta2.jpeg used on input line 336.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+Overfull \hbox (9.29825pt too wide) in paragraph at lines 344--345
+[]\OT1/cmr/m/n/10 Using Gibbs sam-pler, we ob-tain a trace that suits the one o
+f an $\OML/cmm/m/it/10 InverseGamma$
+ []
+
+<task5/Gibbs_sigma2_convergence.jpeg, id=82, 614.295pt x 614.295pt>
+File: task5/Gibbs_sigma2_convergence.jpeg Graphic file (type jpg)
+
+<use task5/Gibbs_sigma2_convergence.jpeg>
+Package pdftex.def Info: task5/Gibbs_sigma2_convergence.jpeg used on input line
+ 346.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task5/Gibbs_beta2_convergence.jpeg, id=83, 614.295pt x 614.295pt>
+File: task5/Gibbs_beta2_convergence.jpeg Graphic file (type jpg)
+
+<use task5/Gibbs_beta2_convergence.jpeg>
+Package pdftex.def Info: task5/Gibbs_beta2_convergence.jpeg used on input line 
+347.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+ [15 <./task5/CSMC_sigma2.jpeg> <./task5/CSMC_beta2.jpeg>]
+<task5/CSMC_sigma2_convergence.jpeg, id=87, 614.295pt x 614.295pt>
+File: task5/CSMC_sigma2_convergence.jpeg Graphic file (type jpg)
+
+<use task5/CSMC_sigma2_convergence.jpeg>
+Package pdftex.def Info: task5/CSMC_sigma2_convergence.jpeg used on input line 
+352.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task5/CSMC_beta2_convergence.jpeg, id=88, 614.295pt x 614.295pt>
+File: task5/CSMC_beta2_convergence.jpeg Graphic file (type jpg)
+
+<use task5/CSMC_beta2_convergence.jpeg>
+Package pdftex.def Info: task5/CSMC_beta2_convergence.jpeg used on input line 3
+53.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+ [16 <./task5/Gibbs_sigma2_convergence.jpeg> <./task5/Gibbs_beta2_convergence.j
+peg> <./task5/CSMC_sigma2_convergence.jpeg> <./task5/CSMC_beta2_convergence.jpe
+g>]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ú in font cmr10!
@@ -333,87 +383,87 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
- [16] [17]
-Underfull \hbox (badness 10000) in paragraph at lines 407--409
+ [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 431--433
 
  []
 
-<task7/output_initial_alpha10_sigma05_N10.jpeg, id=90, 614.295pt x 614.295pt>
+<task7/output_initial_alpha10_sigma05_N10.jpeg, id=99, 614.295pt x 614.295pt>
 File: task7/output_initial_alpha10_sigma05_N10.jpeg Graphic file (type jpg)
 
 <use task7/output_initial_alpha10_sigma05_N10.jpeg>
 Package pdftex.def Info: task7/output_initial_alpha10_sigma05_N10.jpeg used on 
-input line 410.
+input line 434.
 (pdftex.def)             Requested size: 227.62204pt x 227.62303pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 412--414
+Underfull \hbox (badness 10000) in paragraph at lines 436--438
 
  []
 
-<task7/output_final_alpha10_sigma05_N10.jpeg, id=91, 614.295pt x 614.295pt>
+<task7/output_final_alpha10_sigma05_N10.jpeg, id=100, 614.295pt x 614.295pt>
 File: task7/output_final_alpha10_sigma05_N10.jpeg Graphic file (type jpg)
 
 <use task7/output_final_alpha10_sigma05_N10.jpeg>
 Package pdftex.def Info: task7/output_final_alpha10_sigma05_N10.jpeg used on in
-put line 415.
+put line 439.
 (pdftex.def)             Requested size: 256.0748pt x 256.07121pt.
- [18 <./task7/output_initial_alpha10_sigma05_N10.jpeg>]
-<task7/output_initial_alpha10_sigma05_N20.jpeg, id=95, 614.295pt x 614.295pt>
+ [19 <./task7/output_initial_alpha10_sigma05_N10.jpeg>]
+<task7/output_initial_alpha10_sigma05_N20.jpeg, id=105, 614.295pt x 614.295pt>
 File: task7/output_initial_alpha10_sigma05_N20.jpeg Graphic file (type jpg)
 
 <use task7/output_initial_alpha10_sigma05_N20.jpeg>
 Package pdftex.def Info: task7/output_initial_alpha10_sigma05_N20.jpeg used on 
-input line 425.
+input line 449.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
 
-<task7/output_final_alpha10_sigma05_N20.jpeg, id=96, 614.295pt x 614.295pt>
+<task7/output_final_alpha10_sigma05_N20.jpeg, id=106, 614.295pt x 614.295pt>
 File: task7/output_final_alpha10_sigma05_N20.jpeg Graphic file (type jpg)
 
 <use task7/output_final_alpha10_sigma05_N20.jpeg>
 Package pdftex.def Info: task7/output_final_alpha10_sigma05_N20.jpeg used on in
-put line 426.
+put line 450.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
- [19 <./task7/output_final_alpha10_sigma05_N10.jpeg> <./task7/output_initial_al
+ [20 <./task7/output_final_alpha10_sigma05_N10.jpeg> <./task7/output_initial_al
 pha10_sigma05_N20.jpeg> <./task7/output_final_alpha10_sigma05_N20.jpeg>]
-<task7/output_initial_alpha5_sigma05_N15.jpeg, id=101, 614.295pt x 614.295pt>
+<task7/output_initial_alpha5_sigma05_N15.jpeg, id=110, 614.295pt x 614.295pt>
 File: task7/output_initial_alpha5_sigma05_N15.jpeg Graphic file (type jpg)
 
 <use task7/output_initial_alpha5_sigma05_N15.jpeg>
 Package pdftex.def Info: task7/output_initial_alpha5_sigma05_N15.jpeg used on i
-nput line 434.
+nput line 458.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
 
-<task7/output_final_alpha5_sigma05_N15.jpeg, id=102, 614.295pt x 614.295pt>
+<task7/output_final_alpha5_sigma05_N15.jpeg, id=111, 614.295pt x 614.295pt>
 File: task7/output_final_alpha5_sigma05_N15.jpeg Graphic file (type jpg)
 
 <use task7/output_final_alpha5_sigma05_N15.jpeg>
 Package pdftex.def Info: task7/output_final_alpha5_sigma05_N15.jpeg used on inp
-ut line 435.
+ut line 459.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
 
-<task7/output_initial_alpha15_sigma05_N15.jpeg, id=103, 614.295pt x 614.295pt>
+<task7/output_initial_alpha15_sigma05_N15.jpeg, id=112, 614.295pt x 614.295pt>
 File: task7/output_initial_alpha15_sigma05_N15.jpeg Graphic file (type jpg)
 
 <use task7/output_initial_alpha15_sigma05_N15.jpeg>
 Package pdftex.def Info: task7/output_initial_alpha15_sigma05_N15.jpeg used on 
-input line 441.
+input line 465.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
 
-<task7/output_final_alpha15_sigma05_N15.jpeg, id=104, 614.295pt x 614.295pt>
+<task7/output_final_alpha15_sigma05_N15.jpeg, id=113, 614.295pt x 614.295pt>
 File: task7/output_final_alpha15_sigma05_N15.jpeg Graphic file (type jpg)
 
 <use task7/output_final_alpha15_sigma05_N15.jpeg>
 Package pdftex.def Info: task7/output_final_alpha15_sigma05_N15.jpeg used on in
-put line 442.
+put line 466.
 (pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
- [20 <./task7/output_initial_alpha5_sigma05_N15.jpeg> <./task7/output_final_alp
+ [21 <./task7/output_initial_alpha5_sigma05_N15.jpeg> <./task7/output_final_alp
 ha5_sigma05_N15.jpeg> <./task7/output_initial_alpha15_sigma05_N15.jpeg> <./task
 7/output_final_alpha15_sigma05_N15.jpeg>] (Report_Assignment2.aux) ) 
 Here is how much of TeX's memory you used:
- 3295 strings out of 493323
- 51395 string characters out of 3139069
+ 3325 strings out of 493323
+ 52362 string characters out of 3139069
  116389 words of memory out of 3000000
- 6791 multiletter control sequences out of 15000+200000
+ 6815 multiletter control sequences out of 15000+200000
  9988 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,12n,39p,672b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -432,9 +482,9 @@ fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmti10.pfb>
-Output written on Report_Assignment2.pdf (20 pages, 2076033 bytes).
+Output written on Report_Assignment2.pdf (21 pages, 2576617 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
+ 164 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 111 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 141 words of extra memory for PDF output out of 10000 (max. 10000000)
 
