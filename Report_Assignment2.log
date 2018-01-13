@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  12 JAN 2018 22:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.13)  13 JAN 2018 13:23
 entering extended mode
 **./Report_Assignment2.tex
 (Report_Assignment2.tex
@@ -303,7 +303,24 @@ Package pdftex.def Info: task3/V_6_T_6_N_10000_Blocked_Gibbs.png used on input
 line 278.
 (pdftex.def)             Requested size: 227.6217pt x 170.71652pt.
  [13 <./task3/V_6_T_6_N_10000_Gibbs.png> <./task3/V_6_T_6_N_10000_Blocked_Gibbs
-.png>] [14]
+.png>]
+<task5/Gibbs_sigma2.jpeg, id=75, 614.295pt x 614.295pt>
+File: task5/Gibbs_sigma2.jpeg Graphic file (type jpg)
+
+<use task5/Gibbs_sigma2.jpeg>
+Package pdftex.def Info: task5/Gibbs_sigma2.jpeg used on input line 316.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task5/Gibbs_beta2.jpeg, id=76, 614.295pt x 614.295pt>
+File: task5/Gibbs_beta2.jpeg Graphic file (type jpg)
+
+<use task5/Gibbs_beta2.jpeg>
+Package pdftex.def Info: task5/Gibbs_beta2.jpeg used on input line 317.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+Missing character: There is no Ô in font cmr10!
+Missing character: There is no ¨ in font cmr10!
+Missing character: There is no Å in font cmr10!
+ [14 <./task5/Gibbs_sigma2.jpeg> <./task5/Gibbs_beta2.jpeg>] [15]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ú in font cmr10!
@@ -316,58 +333,108 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
- [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 391--393
+ [16] [17]
+Underfull \hbox (badness 10000) in paragraph at lines 407--409
 
  []
 
-<task7/output_initial_alpha10_sigma05.jpeg, id=85, 614.295pt x 614.295pt>
-File: task7/output_initial_alpha10_sigma05.jpeg Graphic file (type jpg)
+<task7/output_initial_alpha10_sigma05_N10.jpeg, id=90, 614.295pt x 614.295pt>
+File: task7/output_initial_alpha10_sigma05_N10.jpeg Graphic file (type jpg)
 
-<use task7/output_initial_alpha10_sigma05.jpeg>
-Package pdftex.def Info: task7/output_initial_alpha10_sigma05.jpeg used on inpu
-t line 394.
+<use task7/output_initial_alpha10_sigma05_N10.jpeg>
+Package pdftex.def Info: task7/output_initial_alpha10_sigma05_N10.jpeg used on 
+input line 410.
 (pdftex.def)             Requested size: 227.62204pt x 227.62303pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 396--398
+Underfull \hbox (badness 10000) in paragraph at lines 412--414
 
  []
 
-<task7/output_final_alpha10_sigma05.jpeg, id=86, 614.295pt x 614.295pt>
-File: task7/output_final_alpha10_sigma05.jpeg Graphic file (type jpg)
+<task7/output_final_alpha10_sigma05_N10.jpeg, id=91, 614.295pt x 614.295pt>
+File: task7/output_final_alpha10_sigma05_N10.jpeg Graphic file (type jpg)
 
-<use task7/output_final_alpha10_sigma05.jpeg>
-Package pdftex.def Info: task7/output_final_alpha10_sigma05.jpeg used on input 
-line 399.
+<use task7/output_final_alpha10_sigma05_N10.jpeg>
+Package pdftex.def Info: task7/output_final_alpha10_sigma05_N10.jpeg used on in
+put line 415.
 (pdftex.def)             Requested size: 256.0748pt x 256.07121pt.
- [17 <./task7/output_initial_alpha10_sigma05.jpeg>] [18 <./task7/output_final_a
-lpha10_sigma05.jpeg>]
-(Report_Assignment2.aux) ) 
+ [18 <./task7/output_initial_alpha10_sigma05_N10.jpeg>]
+<task7/output_initial_alpha10_sigma05_N20.jpeg, id=95, 614.295pt x 614.295pt>
+File: task7/output_initial_alpha10_sigma05_N20.jpeg Graphic file (type jpg)
+
+<use task7/output_initial_alpha10_sigma05_N20.jpeg>
+Package pdftex.def Info: task7/output_initial_alpha10_sigma05_N20.jpeg used on 
+input line 425.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task7/output_final_alpha10_sigma05_N20.jpeg, id=96, 614.295pt x 614.295pt>
+File: task7/output_final_alpha10_sigma05_N20.jpeg Graphic file (type jpg)
+
+<use task7/output_final_alpha10_sigma05_N20.jpeg>
+Package pdftex.def Info: task7/output_final_alpha10_sigma05_N20.jpeg used on in
+put line 426.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+ [19 <./task7/output_final_alpha10_sigma05_N10.jpeg> <./task7/output_initial_al
+pha10_sigma05_N20.jpeg> <./task7/output_final_alpha10_sigma05_N20.jpeg>]
+<task7/output_initial_alpha5_sigma05_N15.jpeg, id=101, 614.295pt x 614.295pt>
+File: task7/output_initial_alpha5_sigma05_N15.jpeg Graphic file (type jpg)
+
+<use task7/output_initial_alpha5_sigma05_N15.jpeg>
+Package pdftex.def Info: task7/output_initial_alpha5_sigma05_N15.jpeg used on i
+nput line 434.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task7/output_final_alpha5_sigma05_N15.jpeg, id=102, 614.295pt x 614.295pt>
+File: task7/output_final_alpha5_sigma05_N15.jpeg Graphic file (type jpg)
+
+<use task7/output_final_alpha5_sigma05_N15.jpeg>
+Package pdftex.def Info: task7/output_final_alpha5_sigma05_N15.jpeg used on inp
+ut line 435.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task7/output_initial_alpha15_sigma05_N15.jpeg, id=103, 614.295pt x 614.295pt>
+File: task7/output_initial_alpha15_sigma05_N15.jpeg Graphic file (type jpg)
+
+<use task7/output_initial_alpha15_sigma05_N15.jpeg>
+Package pdftex.def Info: task7/output_initial_alpha15_sigma05_N15.jpeg used on 
+input line 441.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+
+<task7/output_final_alpha15_sigma05_N15.jpeg, id=104, 614.295pt x 614.295pt>
+File: task7/output_final_alpha15_sigma05_N15.jpeg Graphic file (type jpg)
+
+<use task7/output_final_alpha15_sigma05_N15.jpeg>
+Package pdftex.def Info: task7/output_final_alpha15_sigma05_N15.jpeg used on in
+put line 442.
+(pdftex.def)             Requested size: 137.9979pt x 137.99481pt.
+ [20 <./task7/output_initial_alpha5_sigma05_N15.jpeg> <./task7/output_final_alp
+ha5_sigma05_N15.jpeg> <./task7/output_initial_alpha15_sigma05_N15.jpeg> <./task
+7/output_final_alpha15_sigma05_N15.jpeg>] (Report_Assignment2.aux) ) 
 Here is how much of TeX's memory you used:
- 3256 strings out of 493323
- 49743 string characters out of 3139069
- 116388 words of memory out of 3000000
- 6760 multiletter control sequences out of 15000+200000
- 10686 words of font info for 38 fonts, out of 3000000 for 9000
+ 3295 strings out of 493323
+ 51395 string characters out of 3139069
+ 116389 words of memory out of 3000000
+ 6791 multiletter control sequences out of 15000+200000
+ 9988 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  39i,12n,39p,672b,323s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Report_Assignment2.pdf (18 pages, 1371358 bytes).
+<C:/Program
+ Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmti10.pfb>
+Output written on Report_Assignment2.pdf (20 pages, 2076033 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
+ 155 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 111 words of extra memory for PDF output out of 10000 (max. 10000000)
 
