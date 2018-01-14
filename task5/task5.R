@@ -1,7 +1,7 @@
 ####################################################################
 #         2.5 Stochastic volatility unknown parameter              #
 ####################################################################
-setwd("C:/Users/Vale/Dropbox/Poli/Erasmus/KTH/Statitical Methods for Applied Computer Science/DD2447_2017/task5")
+setwd("C:/Users/Vale/Dropbox/Poli/Erasmus/KTH/Statitical Methods for Applied Computer Science/Assignments/Assignment 2/GitHub/task5")
 source("task5_functions.R")
 
 library(invgamma)
@@ -45,19 +45,28 @@ for (i in 1:N){
   
 }
 
-x11()
-qplot(sigma2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Sigma2") 
 
 x11()
-qplot(beta2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Beta2") 
+qplot(sigma2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Sigma") 
+
+x11()
+plot(sigma2, type="l")
+
+x11()
+qplot(beta2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Beta") 
+
+x11()
+plot(beta2, type="l")
 
 
 
 # Question 12
 #-------------------------------------------------------------------
 T = 500
-N = 100
-phi = 0.951934
+num_samples = 1000
+burn_in = num_samples/2
+N = burn_in+num_samples
+phi = 0.970944
 
 sigma2 = NULL   # will have dimension 1xN
 beta2 = NULL    # will have dimension 1xN
@@ -68,8 +77,8 @@ y = read.table("output.txt")
 # sigma is initialized to its correct value
 # X is the matrix representing the results of each step of SMC
 sigma = 0.1315
-beta = 0.63715
-X_smc = smc_tot(sigma, phi, beta, T)
+beta = 0.63715^2
+X_smc = smc_tot(sigma, phi, sqrt(beta), T)
 
 # j = sample(1:N, 1)
 # x = X_smc[,j]
@@ -81,18 +90,32 @@ for (t in 2:(T+1))
 
 # Gibbs sampling
 for (i in 1:N){
-  sigma = sqrt(update_sigma2(x, phi, T))
-  sigma2 = c(sigma2, sigma^2)
+  sigma = update_sigma2(x, phi, T)
   
-  j = sample(1:N, 1)
-  x = smc(X_smc, i, sigma, phi, beta, T, j)
+  if (!is.na(sigma) & i>burn_in)
+    sigma2 = c(sigma2, sigma)
   
-  beta = sqrt(update_beta2(x, y[,1], T))
-  beta2 = c(beta2, beta^2)
+  if (is.na(sigma))
+    sigma = 0.1315^2
+
+  j = sample(1:999, 1)
+  x = smc(X_smc, sqrt(sigma), phi, sqrt(beta), T, j)
+  
+  beta = update_beta2(x, y[,1], T)
+  
+  if (i>burn_in)
+    beta2 = c(beta2, beta)
 }
 
 x11()
 qplot(sigma2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Sigma") 
 
 x11()
+plot(sigma2, type="l")
+
+x11()
 qplot(beta2, geom="histogram", fill=I("blue"), col=I("grey"), main="Marginal distribution for Beta") 
+
+x11()
+plot(beta2, type="l")
+

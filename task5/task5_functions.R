@@ -16,7 +16,7 @@ update_sigma2 = function(x, phi, T){
   a = 0.01
   b = 0.01
   
-  temp = sum((x[2:(T+1)]-phi*x[1:T])^2)
+  temp = sum((x[2:length(x)]-phi*x[1:(length(x)-1)])^2)
   
   return (rinvgamma(1, shape=a+T/2, scale=b+temp/2))
   # return (rinvgamma(1, a+T/2, b+temp/2))
@@ -49,7 +49,7 @@ generateU = function(v, u1, N){
 }
 
 smc_tot = function(sigma, phi, beta, T){
-  N = 100
+  N = 1000
   X = NULL # N columns, T+1 rows --> a particle path is a column
   
   u = array(0,N)
@@ -139,8 +139,9 @@ smc_tot = function(sigma, phi, beta, T){
   
 }
 
-smc = function(Xi, i, sigma, phi, beta, T, j){
-  N = 100
+smc = function(Xk, sigma, phi, beta, T, j){
+  N = 1000
+  k = N
   output = NULL
   
   u = array(0,N)
@@ -153,7 +154,7 @@ smc = function(Xi, i, sigma, phi, beta, T, j){
   
   # Sampling N times, looking at x0 values
   x_old = sapply(phi*x0, normalSamplingX, sigma=sigma)
-  x_old[i] = Xi[1]
+  x_old[k] = Xk[1]
   
   p1 = sum(mapply(dnorm, x_old, phi*x0, sd=sigma) * dnorm(x0,  0, sqrt(sigma^2/(1-phi^2))))
   alpha = dnorm(y[1,1], 0, sqrt((beta^2)*exp(x_old))) * p1
@@ -175,7 +176,7 @@ smc = function(Xi, i, sigma, phi, beta, T, j){
     }
   }
   
-  x_new[i] = Xi[1] 
+  x_new[k] = Xk[1] 
   
   if (!is.null(x_new)){
     
@@ -191,7 +192,7 @@ smc = function(Xi, i, sigma, phi, beta, T, j){
   for (t in 2:T){
     
     x_old = sapply(phi*x_new, normalSamplingX, sigma = sigma)
-    x_old[i] = Xi[t] 
+    x_old[k] = Xk[t] 
     
     alpha = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x_old)))
     w_old = w_new * alpha
@@ -222,7 +223,7 @@ smc = function(Xi, i, sigma, phi, beta, T, j){
       break
     }
     
-    x_new[i] = Xi[t] 
+    x_new[k] = Xk[t] 
     
     alpha = dnorm(y[t,1], 0, sqrt((beta^2)*exp(x_new)))
     w_new = w_new*alpha
