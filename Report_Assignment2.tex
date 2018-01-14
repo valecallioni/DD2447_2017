@@ -2,7 +2,10 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{caption}
-\graphicspath{{C:\Users\Vale\Dropbox\Poli\Erasmus\KTH\Statitical Methods for Applied Computer Science\DD2447_2017}}
+\usepackage{subcaption}
+\usepackage{float}
+
+\graphicspath{{ /media/vribic/DATA/linux/ubuntu_mate/home/college/StatMethods/gitrepos/DD2447_2017 }}
 
 % Title Page
 \title{Statistical Methods in \\ Applied Computer Science, Fall 2017 \\ Assignment 2}
@@ -168,7 +171,6 @@ From Figure 3, we observe that for smaller values of T we have a smaller varianc
 \newpage
 
 
-
 \section*{2.2 MCMC for the stochastic volatility model}
 We will now describe an MCMC sampler for the stochastic volatility model.
 
@@ -209,7 +211,7 @@ $ p(x_{0:T}, y_{1:T} \mid \theta) = $
 $ \mathcal{N}( x_0 \mid 0, \frac{\sigma^2}{1- \phi^2}) \sum_{t=1}^T [ \mathcal{N}(x_t \mid \phi x_{t-1},\sigma^2 ) \mathcal{N}(y_t \mid 0, \beta^2 exp(x_t))] 
 $
 
-Initialise a random initial state $x_{0:T}$ and use a stochastic gradient descent algorithm to find the **MAP** estimation for the given data $y_{1:T}$.
+Initialize a random initial state $x_{0:T}$ and use a stochastic gradient descent algorithm to find the **MAP** estimation for the given data $y_{1:T}$.
 
 \subsubsection*{Modeling the proposal density}
 
@@ -449,53 +451,148 @@ $$\frac{|y_t|}{\beta \sqrt{2 \pi}} exp \bigg\{ -\frac{|y_t|^2}{2 \beta^2} exp\{-
 
 \subsubsection*{Experiments}
 
+Below are listed the samples of values $x_{0,T}$ with $T$ being equal to 20. For longer sequences, such as $T=500$, it was impossible to find a good starting point due to the high dimensionality and therefore the optimization process could not perform as needed. Only the first 6 states are plotted. The generated parameters were $\sigma = 0.304 $ , $\beta = 0.118 $, $\phi = 0.980 $ . The burn in parameter was set to 1000 samples after which we compute 10000 acceptable samples.
+
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x0.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x1.png}
+		
+		\caption*{Samples for state $x_0$ and $x_1$}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+				
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x2.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x3.png}
+		
+		\caption*{Samples for state $x_2$ and $x_3$}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x4.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x5.png}
+		
+		\caption*{Samples for state $x_4$ and $x_5$}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x6.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x7.png}
+		
+		\caption*{Samples for state $x_6$ and $x_7$}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x8.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x9.png}
+		
+		\caption*{Samples for state $x_8$ and $x_9$}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x10.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q1/plt_x_all.png}
+		
+		\caption*{Samples for state $x_10$ and all the samples on one graph}
+	\end{center}
+\end{figure}
+
+\subsubsection{Question 9}
+
+For this task the state is extended by two more variables $\sigma^2$ and $\beta^2$ beside the so far used $x_{0:T}$ states. Initially they will be sampled from the Inverse Gamma distribution like follows:
+
+$$ \sigma^2 \sim \mathcal{IG}(a = 0.01, b = 0.01)$$
+$$ \beta^2 \sim \mathcal{IG}(a = 0.01, b = 0.01)$$
+
+
+We will reuse the scheme of sampling uniformly a different variable at each time step but now including the mentioned paramters. The proposed distributions are as follows :
+
+$$ p(\sigma^2 \mid \phi, x_{0:T}, y_{1:T} ) = \mathcal{IG} \left( \sigma^2 \mid a+\frac{T}{2}, b + \frac{1}{2} \sum_{t=1}^T (x_t - \phi x_{t-1})^2 \right) $$
+
+$$ p(\beta^2 \mid \phi, x_{0:T}, y_{1:T} ) = \mathcal{IG} \left( \beta^2 \mid a+\frac{T}{2}, b + \frac{1}{2} \sum_{t=1}^T exp(-x_t)y_t^2 \right) $$
+
+The algorithm is now changed so that in each iteration we sample a value sigma, then a value beta and then a uniformly chosen variable $x_{0:T}$. 
+
+The new dataset parameters are $\sigma = 0.125$, $\beta = 0.185 $ and $\phi=0.962$. The $\sigma^2$ and $\beta^2$ histograms are plotted below, as well as the histograms of the hidden states $x_{0:T}$.
+
+\begin{figure}[H]
+	\begin{center}
+				
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_beta.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_sigma.png}
+		\caption*{Histograms for $\beta^2$ and $\sigma^2$}
+	\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+
+
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x0.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x1.png}
+		
+		\caption*{Samples for state $x_0$ and $x_1$}
+	\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x2.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x3.png}
+		
+		\caption*{Samples for state $x_2$ and $x_3$}
+		\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+	
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x4.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x5.png}
+		
+		\caption*{Samples for state $x_4$ and $x_5$}
+		\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+	
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x6.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x7.png}
+		
+		\caption*{Samples for state $x_6$ and $x_7$}
+		\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+	
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x8.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x9.png}
+		
+		\caption*{Samples for state $x_8$ and $x_9$}
+		\end{center}
+\end{figure}
+\begin{figure}[H]
+	\begin{center}
+	
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x10.png}
+		\includegraphics[width=.4\textwidth]{task2/figures/T_2_2/Q2/plt_x_all.png}
+		
+		\caption*{Samples for state $x_10$ and all the samples on one graph}
+
+	\end{center}
+\end{figure}
+
 
 \newpage
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -618,49 +715,420 @@ In our sampling algorithms we do not need to sample the stop position $s$ for th
 
 \newpage
 
-\section*{2.5 Stochastic volatility unknown parameter}
-Let us consider the problem presented in task 2.1. Now, we assume that the variance parameters $\sigma$ and $\beta$ are both unknown, while $\phi$ is given. The Bayesian setting is characterized by the priors:
-$$
-\sigma^2 \sim \mathcal{IG}(a=0.01, b=0.01)
-$$
-$$
-\beta^2 \sim \mathcal{IG}(a=0.01, b=0.01)
-$$
-Then, we obtain the posterior distributions of the variance parameters in closed form:
-$$
-p(\sigma^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}(x_t-\phi x_{t-1})^2)
-$$
-$$
-p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)
-$$
+\section*{2.4 Gibbs sampler for the magic word}
 
-\subsection*{Question 13}
-We implemented a particle Gibbs sampler to compute the posterior distribution $p(\sigma^2, \beta^2|\phi, y_{1:T})$. To do so, at each iteration we alternatively sample from
-\begin{enumerate}
-	\item[-] $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$
-	\item[-] $p(\beta^2|\phi, x_{0:T}, y_{1:t})$
-	\item[-] $p(x_{0:T}|\theta, y_{1:T})$
-\end{enumerate}
-The initialization is perfomed considering, as first value of $\sigma$ the true value, i.e., $\sigma = 0.1315$. In this problem, $\phi = 0.9709$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
+The following generative model magic word generates $N$ sequences if length $M$, $s^1, ..., s^N $ where $s^n = s_1^n, ... ,s_M^n $. All sequences are over the alphabet $[K]$. Each of these sequences has a "magic" word of length W hidden in it and the rest of the sequence is called background. 
 
-Considering $N=10^4$ and $T=500$, with a $burn-in$ fase of 5000 iterations, we obtained the following marginal distributions for the variance parameters:
+First, for each $n$, a start position $r_n$ for the magic word is sampled uniformly from $[M-w+1]$. Then the $j$:th positions in the word are sampled from $q_j(x)=Cat(x \mid \theta_j)$ where $\theta_j$ has a $Dir( \theta_j \mid \alpha)$ prior. All other positions in the sequences are sampled from the background distribution $q(x) = Cat(x \mid \theta)$ where $\theta$ has a $Dir(\theta \mid \alpha') prior.$
+
+We are interested in the posterior $p(r_1,...,r_N \mid D)$ where $D$ is the set of sequences $ s^1, ..., s^N$ generated by the model and the $r_n$ is the start position of the magic word in the $n$:th sequence $s^n$. The following describes a Gibbs sampler that can be used for estimating the posterior over start positions after having observed $s^1, ..., s^N$. The sampler that can be used for estimating the posterior over start positions and $\alpha'$. The states are vectors of start position $R= (r_1,...,r_N)$
+
+Notice that, for the Dirichlet-categorical (Dirichlet-multinoulli) distribution for the $j$:th position of the magic words, the marginal likelihood is 
+
+$$ p(D_j \mid R) = \frac{\Gamma(\sum_k \alpha_k)}{\Gamma(N \sum_k \alpha_k)} \prod_k \frac{\Gamma( N_k^j + \alpha_k)}{\Gamma(\alpha_k)} $$
+
+where $N_k^j$ is the count of the symbol $k$ in the $j$:th column of the magic words, introduced by $R$. For the background, the marginal likelihood is 
+
+$$ p(D_B \mid R) = \frac{\Gamma(\sum_k \alpha_k')}{\Gamma(B \sum_k \alpha_k')} \prod_k \frac{\Gamma( B_k + \alpha_k')}{\Gamma(\alpha_k')} $$
+
+where $B$ is the number of background positions (i.e. $N(M-w)$) and $B_k$ is the count of symbol $k$ in the background, induced by $R$. The full condition $p(r_n \mid R_{-n}, D)$ can be expressed as follows
+
+\begin{align*}
+p(r_n \mid R_{-n}, D) &= \frac{p(R_{-n} \cup r_n, D)}{p(R_{-n}, D)} \\
+& \propto p(R_{-n} \cup r_n, D) \\
+& \propto p(D \mid R_{-n} \cup r_n) \\
+& = p(D_B \mid R_{-n} \cup r_n) \prod_j p(D_j \mid R_{-n} \cup r_n)
+\end{align*}
+
+
+\subsection*{Question 11}
+
+The task consists of two practical parts: implementing the data generator and implementing the Gibbs sampler. 
+
+Data generator needs to produce $N$ sequences, each of length $M$. Every element in the sequence will be a token over the alphabet of size $K$. In our experiments the alphabet will consist of letters $a,b,c,d$, therefore $K$ being equal to $4$, we'll set $M=30$ and $W=10$. We also set the number of samples $N=10$, Dirichlet prior parameter for background  to vector $\alpha' = [1,1,1,1]$ and the Dirichlet prior parameter for magic word  $\alpha = [12,7,3,1]$ .
+
+The process of generating data starts by generating parameters $\theta'$ and $\theta$ from the Dirichlet priors $\alpha'$ and $\alpha$ respectively. We then sample a background for each sequence using the multinomial distribution with parameter $\theta$. Then we uniformly choose a position of the start of the magic word $p_{mw} \sim U(0, M-W+1)$ and sample for the magic word tokens from multinomial distribution with the parameters $\theta$. 
+
+Next comes the Gibbs sampler which we want to use to find the start positions of the magic words in sequences. We use $r_n$ to denote the start position of the magic word in the $n^{th}$ sequence. Therefore we estimate $p(r_1,...,r_n \mid \mathcal{D})$ where $\mathcal{D}$ is the generated data, i.e. the provided sequences.
+
+The task requires of us to use collapsed Gibbs sampler, which supports scenarios where some of the unknown quantities are analytically integrated. This method is also much more efficient, since it is sampling in a lower dimensional space. In our case $\alpha$ and $\alpha'$ are know parameters but the sequences are sampled from Multinomial distribution of parameter $\theta$, generated from $\alpha'$ used for background symbols and $\theta_j$, generated from $\alpha$ used for magic words symbols per position $j \in [1,..,W]$. Therefore we will integrate out the $\theta$ and $\theta_j$ parameters, which will cause all the symbols in sequences to become inter-dependent.
+
+The initial state $R^{(0)} = r_1^0, ..., r_n^0$ is initialized randomly  and they will be re-sampled in the Gibbs sampling process. 
+
+In each iteration of the sampling process we calculate the probability of each proposed position $r_n^{(i)}$ of being the real starting position of the magic word using:
+
+$$ p(r_n^{(i)} \mid \mathcal{R}_{-n}^{(i)}, \mathcal{D}) \propto p(\mathcal{D}_{B} \mid \mathcal{R}^{(i)}, \alpha') \prod_{j=l}^{l+W} p(\mathcal{D}_j \mid \mathcal{R}^{(i)}, \alpha)$$ 
+
+In the above equation $r_n^{(i)}$ denotes a vector of size $| M-W+1 |$ of probabilities of every valid position being the starting one, for the $n^{th}$ sequence. 
+
+
+In order to get a more numerically stable probability measure we will apply the $log$ function to the probability functions. Distribution for the $j$:th position of the magic words now looks like:
+
+$$ p(D_j \mid R) = \left[log\left(\Gamma(\sum_k \alpha_k) \right) - log\left(\Gamma(N \sum_k \alpha_k)\right) \right] \sum_k \left[ log\left(\Gamma( N_k^j + \alpha_k)\right) - log\left(\Gamma(\alpha_k)\right) \right] $$
+
+where $N_k^j$ is the count of the symbol $k$ in the $j$:th column of the magic words, introduced by $R$. The log-background marginal likelihood is calculated as
+
+$$ p(D_B \mid R) = \left[ log\left(\Gamma(\sum_k \alpha_k') \right) - log\left(\Gamma(B \sum_k \alpha_k')\right) \right] \sum_k \left[ log\left(\Gamma( B_k + \alpha_k')\right) - log\left(\Gamma(\alpha_k') \right) \right] $$
+
+where $B$ is the number of background positions (i.e. $N(M-w)$) and $B_k$ is the count of symbol $k$ in the background, induced by $R$.
+
+
+The generated vector is used as the parameter of the categorical distribution from which we sample the new starting positions $r_n^{(i+1)}$ and we do this through burn-in phase after which we can sample from the target distribution.
+
+\subsection*{Question 12}
+
+To show we attained convergence we will provide to forms of proof: a visual one and a numeric one. 
+
+The full sequence has a length of $M=30$ with the length of magic-word being $M=10$. First we repeat the sampling procedure $C=10$ times in order to obtain $10$ independent randomly initialized chains. Each chain has $500$ samples. We ignore the burn-in in order to observe the full convergence from the initial state in the plots, but the estimated potential scale reduction statistics is computed for last $N=1000$, $N=500$, $N=100$ samples taken from the previously sampled data. 
+
+The true position are as follows:
+
 \begin{center}
-	\includegraphics[width=.4\textwidth]{task5/Gibbs_sigma2.jpeg}
-	\includegraphics[width=.4\textwidth]{task5/Gibbs_beta2.jpeg}
+	\begin{tabular}{||c c c c c c c c c c||} 
+		\hline
+		p1 & p2 & p3 & p4 & p5 & p6 & p7 & p8 & p9 & p10 \\ [0.5ex] 
+		\hline\hline
+		17 & 8 & 1 & 3 & 1 & 12 & 19 & 16 & 1 & 5 \\ [1ex]
+		\hline
+	\end{tabular}
 \end{center}
 
+The next series of plots represent the sampled positions over time for each chain.
+We observe that the chain converges to good points quickly or it gets stuck between a few similar values. 
 
-\subsection*{Question 14}
-We tried to implement a Particle MCMC sampler for this model, by reusing the SMC implemented in 2.1, now modiﬁed to become a Conditional SMC. 
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos0.png}
+		\caption*{Samples for position 0}
+	\end{center}
+\end{figure}
 
-Our implementation works as follows: first we initialize $\sigma$ and $\beta$ to their correct values; then we initialize $x_{0:T}$ using the distributions given in task 2.1; we perform once the SMC (with resampling), to have a $(T+1) \times N$ matrix, that we need for the Conditional Sequential Monte Carlo.
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos1.png}
+		\caption*{Samples for position 1}
+	\end{center}
+\end{figure}
 
-The sampling part has the following steps:
-\begin{enumerate}
-	\item we sample $\sigma^2$ from $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$;
-	\item we sample $x_{0:T}$ running again the SMC algorithm, where  the $N^{th}$ particle's path is unchanged, with respect to the first SMC that we run. The sampling is performed by picking a random index $j$ in $\{1,...,N-1\}$ and considering the path of the $j^{th}$ particle;
-	\item we sample $\beta^2$ from $p(\beta^2|\phi, x_{0:T}, y_{1:t})$.
-\end{enumerate}
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos2.png}
+		\caption*{Samples for position 2}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos3.png}
+		\caption*{Samples for position 3}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos4.png}
+		\caption*{Samples for position 4}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos5.png}
+		\caption*{Samples for position 5}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos6.png}
+		\caption*{Samples for position 6}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos7.png}
+		\caption*{Samples for position 7}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos8.png}
+		\caption*{Samples for position 8}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos9.png}
+		\caption*{Samples for position 9}
+	\end{center}
+\end{figure}
+
+\newpage
+
+We can also observe the histograms to see the points around which the data gravitate to.
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos0.png}
+		\caption*{Samples for position 0}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos1.png}
+		\caption*{Histogram for position 1}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos2.png}
+		\caption*{Histogram for position 2}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos3.png}
+		\caption*{Histogram for position 3}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos4.png}
+		\caption*{Histogram for position 4}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos5.png}
+		\caption*{Histogram for position 5}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos6.png}
+		\caption*{Histogram for position 6}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos7.png}
+		\caption*{Histogram for position 7}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos8.png}
+		\caption*{Histogram for position 8}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos9.png}
+		\caption*{Histogram for position 9}
+	\end{center}
+\end{figure}
+
+We now see that the plots with high variance of samples have a few distinctive values that keep getting chosen in equal proportion.
+
+For a more quantitative overview of this method we can observe the convergence over the positions by using the estimated potential scale reduction statistics. This methods compares the variance of each position within each chain to its variance across chains.
+
+We will evaluate the convergence of our chain over time. For each time step we recompute the convergence from the beginning up until that point and then plot the convergence rate for each position from the second position until the end.
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/convergence_epsr.png}
+		\caption*{Estimated potential scale reduction statistis over time}
+	\end{center}
+\end{figure}
+
+We observe that the convergence happens under 100 samples.
+
+For accuracy we will introduce a metrics to evaluate how the performance of each chain changes over time. Since we are provided the true initial positions of the magic word we are estimating, we can compute the mean squared error for each sample.
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos0.png}
+		\caption*{MSE for position 0}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos1.png}
+		\caption*{MSE for position 1}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos2.png}
+		\caption*{MSE for position 2}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos3.png}
+		\caption*{MSE for position 3}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos4.png}
+		\caption*{MSE for position 4}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos5.png}
+		\caption*{MSE for position 5}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos6.png}
+		\caption*{MSE for position 6}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos7.png}
+		\caption*{MSE for position 7}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos8.png}
+		\caption*{MSE for position 8}
+	\end{center}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+		
+		\includegraphics[width=1\textwidth]{task4/figures/T_2_4/Q2/mse_pos9.png}
+		\caption*{MSE for position 9}
+	\end{center}
+\end{figure}
+
+We observe that the error is gradually diminishing and converging to a specific value due to the reduction of the variance over time. Still for the positions on which the sampler remain indecisive such as position 1 and 4 the error remains high. 
+
+\newpage
+
+
+\section*{2.5 Stochastic volatility unknown parameter}
+Let us consider the problem presented in task 2.1. Now, we assume that the variance parameters $\sigma$ and $\beta$ are both unknown, while $\phi$ is given. The Bayesian setting is characterized by the priors:
+$$
+\sigma^2 \sim \mathcal{IG}(a=0.01, b=0.01)
+$$
+$$
+\beta^2 \sim \mathcal{IG}(a=0.01, b=0.01)
+$$
+Then, we obtain the posterior distributions of the variance parameters in closed form:
+$$
+p(\sigma^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}(x_t-\phi x_{t-1})^2)
+$$
+$$
+p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)
+$$
+
+\subsection*{Question 13}
+We implemented a particle Gibbs sampler to compute the posterior distribution $p(\sigma^2, \beta^2|\phi, y_{1:T})$. To do so, at each iteration we alternatively sample from
+\begin{enumerate}
+	\item[-] $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$
+	\item[-] $p(\beta^2|\phi, x_{0:T}, y_{1:t})$
+	\item[-] $p(x_{0:T}|\theta, y_{1:T})$
+\end{enumerate}
+The initialization is perfomed considering as first value of $\sigma$ the true value, i.e., $\sigma = 0.1315$. In this problem, $\phi = 0.9709$. Then we sample the first values of $x_t$, for $t=0...T$, considering the distributions presented in task 2.1.
+
+Considering $N=10^4$ and $T=500$, with a $burn-in$ fase of 5000 iterations, we obtained the following marginal distributions for the variance parameters:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_sigma2.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_beta2.jpeg}
+\end{center}
+
+
+\subsection*{Question 14}
+We tried to implement a Particle MCMC sampler for this model, by reusing the SMC implemented in 2.1, now modifed to become a Conditional SMC. 
+
+Our implementation works as follows: first we initialize $\sigma$ and $\beta$ to their correct values; then we initialize $x_{0:T}$ using the distributions given in task 2.1; we perform once the SMC (with resampling), and the output is a $(T+1) \times N$ matrix, that we need for the Conditional Sequential Monte Carlo.
+
+The sampling part has the following steps:
+\begin{enumerate}
+	\item we sample $\sigma^2$ from $p(\sigma^2|\phi, x_{0:T}, y_{1:t})$;
+	\item we sample $x_{0:T}$ running again the SMC algorithm, where  the $N^{th}$ particle's path is unchanged, with respect to the first SMC that we run. The sampling is performed by picking a random index $j$ in $\{1,...,N-1\}$ and considering the path of the $j^{th}$ particle;
+	\item we sample $\beta^2$ from $p(\beta^2|\phi, x_{0:T}, y_{1:t})$.
+\end{enumerate}
+
+We obtained the following marginal distributions for the variance parameters:
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_sigma2.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_beta2.jpeg}
+\end{center}
+
+\subsection*{Question 15}
+As we can notice from the plots, our implementation does not work properly, since the marginal distributions provided are not the same. 
+
+Anyway, we provide the convergence rates for the two methods.
+
+Using Gibbs sampler, we obtain a trace that suits the one of an $Inverse Gamma$ for $\sigma^2$, but the one of $\beta^2$ corresponds to a $Gaussian$, as we can see in the following plots.
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_sigma2_convergence.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/Gibbs_beta2_convergence.jpeg}
+\end{center}
+
+Using CSMC, we obtain
+\begin{center}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_sigma2_convergence.jpeg}
+	\includegraphics[width=.4\textwidth]{task5/CSMC_beta2_convergence.jpeg}
+\end{center}
 
 \newpage
 
