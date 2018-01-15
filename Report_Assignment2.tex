@@ -17,6 +17,12 @@
 	
 	\newpage
 	
+	\section*{Code}
+	
+	We provide the codes that we used to do this assignment in the folder. The codes of every tasks are saved in the corresponding sub-folder. We used different ways to solve the tasks, like R or Python provided as modules or Jupyter  notebooks, depending on the questions that we had to solve. Every question will have the relative path to the code provided that the report is opened in the same folder in which the assignment was submitted.
+	
+	\newpage
+	
 	\section*{2.1 SMC for the stochastic volatility model}
 	In this first task we have to consider the stochastic volatility model
 	\begin{align*}
@@ -95,6 +101,9 @@
 	$$
 	\hat{p}(y_t|y_{1:t-1}) = \sum_{i=1}^{N}W_{n-1}^i\alpha_t(X_{t-1:t}^i).
 	$$
+	
+	\textbf{Code path} : ./Codes/task2.1  
+	
 	\subsection*{Question 1}
 	Following this reasoning, we implemented the SMC algorithm. The first step is given by the initialization, that is 
 	\begin{enumerate}
@@ -189,9 +198,9 @@
 	2. If $t<T$, sample $ v_n \sim \mathcal{N}(v_n \mid 0,1)$ and set $ x_t' = \frac{x_{t+1} - \sigma v_n}{\phi} $ . Otherwise, set $ x_T' = x_T$ .
 	3. If $t>0$, sample $ w_n \sim \mathcal{N}(w_n \mid 0,1)$ and set $ x_t' = 2 log(\frac{|y_t|}{\beta |w_n|}) $ . Otherwise, set $ x_0' = x_0$ .
 	
+	\textbf{Code path} : ./Codes/task2.2  
 	
-	
-	\subsection*{Question 8}
+	\subsection*{Question 6}
 	In this task we use Markov Chain Monte Carlo (MCMC) method to generate samples for the distribution $p(x_{0:T}, y_{1:T} \mid \theta)$. In general, the method starts by constructing a Markov chain whose stationary distribution is the target density of interest. 
 	
 	MCMC method of choice is the Metropolis Hastings algorithm.
@@ -508,7 +517,7 @@
 		\end{center}
 	\end{figure}
 	
-	\subsubsection{Question 9}
+	\subsubsection{Question 7}
 	
 	For this task the state is extended by two more variables $\sigma^2$ and $\beta^2$ beside the so far used $x_{0:T}$ states. Initially they will be sampled from the Inverse Gamma distribution like follows:
 	
@@ -602,6 +611,8 @@
 	We observe a sequence of $T$ signals, each one representing the label of the edge through which the train has exited a vertex. But the sensors are noisy, and with probability $p = 0.05$, the train reports a random other signal than real direction in which it passed the switch. 
 	
 	We are given a DP algorithm to compute $p(s,O|G,\alpha)$, where $s=(v,e)$ is called stop position; and the final goal is to estimate the probability distribution of the vector $\alpha(\mathbf{v}) = (\alpha(v_1), ..., \alpha(v_N))$,  where $ N=|V(G)| $, using MCMC.
+	
+	\textbf{Code path} : ./Codes/task2.3  
 	
 	\subsection*{Question 8}
 	We implemented the class $Graph$ to generate the map of the railway. This class has the following attributes:
@@ -740,6 +751,7 @@
 	& = p(D_B \mid R_{-n} \cup r_n) \prod_j p(D_j \mid R_{-n} \cup r_n)
 	\end{align*}
 	
+	\textbf{Code path} : ./Codes/task2.4  
 	
 	\subsection*{Question 11}
 	
@@ -799,7 +811,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos0.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos0.png}
 			\caption*{Samples for position 0}
 		\end{center}
 	\end{figure}
@@ -807,7 +819,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos1.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos1.png}
 			\caption*{Samples for position 1}
 		\end{center}
 	\end{figure}
@@ -815,7 +827,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos2.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos2.png}
 			\caption*{Samples for position 2}
 		\end{center}
 	\end{figure}
@@ -823,7 +835,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos3.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos3.png}
 			\caption*{Samples for position 3}
 		\end{center}
 	\end{figure}
@@ -831,7 +843,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos4.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos4.png}
 			\caption*{Samples for position 4}
 		\end{center}
 	\end{figure}
@@ -839,7 +851,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos5.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos5.png}
 			\caption*{Samples for position 5}
 		\end{center}
 	\end{figure}
@@ -847,7 +859,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos6.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos6.png}
 			\caption*{Samples for position 6}
 		\end{center}
 	\end{figure}
@@ -855,7 +867,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos7.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos7.png}
 			\caption*{Samples for position 7}
 		\end{center}
 	\end{figure}
@@ -863,7 +875,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos8.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos8.png}
 			\caption*{Samples for position 8}
 		\end{center}
 	\end{figure}
@@ -871,7 +883,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/convergence_pos9.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/convergence_pos9.png}
 			\caption*{Samples for position 9}
 		\end{center}
 	\end{figure}
@@ -883,7 +895,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos0.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos0.png}
 			\caption*{Samples for position 0}
 		\end{center}
 	\end{figure}
@@ -891,7 +903,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos1.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos1.png}
 			\caption*{Histogram for position 1}
 		\end{center}
 	\end{figure}
@@ -899,7 +911,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos2.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos2.png}
 			\caption*{Histogram for position 2}
 		\end{center}
 	\end{figure}
@@ -907,7 +919,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos3.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos3.png}
 			\caption*{Histogram for position 3}
 		\end{center}
 	\end{figure}
@@ -915,7 +927,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos4.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos4.png}
 			\caption*{Histogram for position 4}
 		\end{center}
 	\end{figure}
@@ -923,7 +935,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos5.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos5.png}
 			\caption*{Histogram for position 5}
 		\end{center}
 	\end{figure}
@@ -931,7 +943,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos6.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos6.png}
 			\caption*{Histogram for position 6}
 		\end{center}
 	\end{figure}
@@ -939,7 +951,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos7.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos7.png}
 			\caption*{Histogram for position 7}
 		\end{center}
 	\end{figure}
@@ -947,7 +959,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos8.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos8.png}
 			\caption*{Histogram for position 8}
 		\end{center}
 	\end{figure}
@@ -955,7 +967,7 @@
 	\begin{figure}[H]
 		\begin{center}
 			
-			\includegraphics[width=.5\textwidth]{task4/figures/T_2_4/Q2/distribution_pos9.png}
+			\includegraphics[width=.7\textwidth]{task4/figures/T_2_4/Q2/distribution_pos9.png}
 			\caption*{Histogram for position 9}
 		\end{center}
 	\end{figure}
@@ -1077,6 +1089,7 @@
 	
 	$$p(\beta^2|\phi, x_{0:T}, y_{1:T}) = \mathcal{IG}(\sigma^2|a+\frac{T}{2}, b+\frac{1}{2}\sum_{t=1}^{T}e^{-x_t}y_t^2)$$
 	
+	\textbf{Code path} : ./Codes/task2.5  
 	
 	\subsection*{Question 13}
 	
@@ -1171,6 +1184,150 @@
 	
 	\newpage
 	
+	\section*{3.1 PyClone Light}
+	
+	In this problem, you should apply a collapsed Gibbs sampler in order to cluster mutations based on a Dirichlet Process Mixture Model (DPMM). The probabilistic model can, following the original publication, be described by the graphcal model in Figure 2(a), where $H$ is a Dirichlet Process (DP). We will instead use the grapical model in Figure 2(b), which yelds the same distribution when equipped with distributions as follows,
+	
+	
+	\begin{equation}
+	\begin{aligned}
+	\pi &\sim \text{Gem}(\alpha) \\
+	Z^n &\sim \pi \\
+	\phi^k &\sim H_0 = \text{Beta}(1,1) \\
+	b^n &\sim \text{Bin}(d^n, \phi^{Z^n})\\
+	\end{aligned}
+	\end{equation}
+	
+	\textbf{Code path} : ./Codes/task3.1  
+	
+	\subsection*{Question 16}
+	
+	Dirichlet process mixture models is a representative algorithm of the class of infinite mixture models with a non-parametric prior, a family of models that do not impose any a priori bound on $K$.
+	
+	The main idea is to have a method of working with an infinite amount of clusters which will be used to represent different distributions, which makes it a distribution over distributions. This can be done with a Dirichlet process, which can be in our case explaind with a stick-breaking construction. 
+	
+	The method generates a infinite sequence of numbers in range from $0$ to $1$, denoted with $\beta_k$ such that $ \beta \sim Beta(1,\alpha)$ for a arbitrary parameter $\alpha$. Beta values are then used to determinate the proportions of stick length as follows:
+	
+	$$ \pi_k = \beta_k \prod_{t=1}^{k-1} (1-\beta_t)$$
+	
+	Another common notation is:
+	
+	$$ \pi \sim GEM(\alpha) $$
+	
+	We can then compute $\theta_k$ as samples comming from different segments $\pi_k$ such that:
+	
+	$$ G(\theta) = \sum_{k=1}^{\infty} \pi_k \delta_{\theta_k}(\theta) $$
+	
+	where $\pi \sim GEM(\alpha)$ and $\theta \sim H$. Then once can show that G id distributed as a Dirichlet process with parameters $\alpha$ and a distribution $H$, i.e.$G \sim DP(\alpha,H)$.
+	
+	In our model sampled $\theta_k$ values correspond to $\phi_k$ probabilities of a successful outcome for a binomial distribution, with the number of trials being randomly generated for each sample. 
+	
+	Now we will derive the conditional probability for the next cluster placement which will be used in the collapsed Gibbs sampler.
+	
+	The probability of data point's cluster $z_i$ being a particular cluster $k$ is :
+	
+	$$ p(z_i = k \mid \mathbf{z}_{-i}, \mathbf{b}, \mathbf{d}, \theta, \alpha) \propto p(z_i = k \mid \mathbf{z}_{-i},\alpha) p(\mathbf{b}_i \mid \mathbf{b}_{-i}, \mathbf{d}, z_i = k, \mathbf{z}_{-i}, \theta ) $$
+	
+	Where we can write :
+	
+	$$ p(z_i \mid \mathbf{z}_{-i}, \alpha) = 
+	\begin{cases}
+	\frac{N_{k,-i}}{\alpha + N -1} \text{ if k has been seen before}\\
+	\frac{\alpha}{\alpha + N -1} \text{ if k is a new cluster}\\
+	\end{cases} $$
+	
+	
+	First we will analyse the case if the cluster has been seen before. That means there are potentialy other points in observed data that are situated in the same cluster. We then procede to write:
+	
+	$$ p(\mathbf{b}_i \mid \mathbf{b}_{-i},\mathbf{d}, z_i = k, \mathbf{z}_{-i}, \theta ) = p(\mathbf{b}_i \mid \mathbf{b}_{-i,k}, \mathbf{d}_k, \theta ) = \frac{p(\mathbf{b}_i,\mathbf{b}_{-i,k} \mid \mathbf{d}_k,\theta )}{p( \mathbf{b}_{-i,k} \mid \mathbf{d}_k \theta )} $$ 
+	
+	$$ p(\mathbf{b}_i,\mathbf{b}_{-i,k} \mid \mathbf{d}_k,\theta ) = \int p(b_i\mid d_i,\phi^k) \left[ \sum_{j \neq i, z_j=k} p(b_j\mid d_j,\phi^k) \right] p(\phi^k \mid H_0) \text{d} \phi^k$$ 
+	
+	$$ p(\mathbf{b}_i,\mathbf{b}_{-i,k} \mid \mathbf{d}_k,\theta ) = \int Bin(b_i\mid d_i,\phi^k) \left[ \sum_{j \neq i, z_j=k} Bin(b_j\mid d_j,\phi^k) \right] Beta(\phi^k \mid a=1,b=1) \text{d} \phi^k$$ 
+	
+	
+	Since the beta distribution is a conjugate prior to binomial distribution, we can write :
+	
+	$$ p(\mathbf{b}_i,\mathbf{b}_{-i,k} \mid \mathbf{d}_k,\theta ) = \binom{\sum_{z_j=k} d_j}{\sum_{z_j=k} b_j} \frac{B(\sum_{z_j=k} b_j + 1 , \sum_{z_j=k} d_j - \sum_{z_j=k} b_j +1)}{B(1,1)} $$ 
+	
+	
+	
+	Analogously :
+	
+	$$ p( \mathbf{b}_{-i,k} \mid \mathbf{d}_k \theta ) = \binom{\sum_{z_j=k,j \neq i} d_j}{\sum_{z_j=k,j \neq i} b_j} \frac{B(\sum_{z_j=k,j \neq i} b_j + 1 , \sum_{z_j=k,j \neq i} d_j - \sum_{z_j=k,j \neq i} b_j +1)}{B(1,1)} $$ 
+	
+	$$ p(\mathbf{b}_i \mid \mathbf{b}_{-i,k}, \mathbf{d}_k, \theta ) = \frac{\binom{\sum_{z_j=k} d_j}{\sum_{z_j=k} b_j} \frac{B(\sum_{z_j=k} b_j + 1 , \sum_{z_j=k} d_j - \sum_{z_j=k} b_j +1)}{B(1,1)}}{\binom{\sum_{z_j=k,j \neq i} d_j}{\sum_{z_j=k,j \neq i} b_j} \frac{B(\sum_{z_j=k,j \neq i} b_j + 1 , \sum_{z_j=k,j \neq i} d_j - \sum_{z_j=k,j \neq i} b_j +1)}{B(1,1)}} $$ 
+	
+	$$ p(\mathbf{b}_i \mid \mathbf{b}_{-i,k}, \mathbf{d}_k, \theta ) = \frac{\binom{\sum_{z_j=k} d_j}{\sum_{z_j=k} b_j}}{\binom{\sum_{z_j=k,j \neq i} d_j}{\sum_{z_j=k,j \neq i} b_j}} \frac{B(\sum_{z_j=k} b_j + 1 , \sum_{z_j=k} d_j - \sum_{z_j=k} b_j +1)}{B(\sum_{z_j=k,j \neq i} b_j + 1 , \sum_{z_j=k,j \neq i} d_j - \sum_{z_j=k,j \neq i} b_j +1)} $$ 
+	
+	For the case when the cluster was not observed before, i.e. it's a new cluster we have : 
+	
+	$$ p(\mathbf{b}_i \mid \mathbf{b}_{-i},\mathbf{d}, z_i = k^*, \mathbf{z}_{-i}, \theta ) = p(b_i \mid \theta ) = \int p(b_i\mid d_i,\phi^{k^*}) p(\phi^{k^*} \mid H_0) \text{d} \phi^{k^*} $$ 
+	
+	$$ p(b_i \mid \theta ) = \binom{d_i}{ b_i} \frac{B(b_i + 1 , d_i - b_i +1)}{B(1,1)} $$ 
+	
+	
+	
+	Finally we can put it all together to write:
+	
+	$$ p(z_i = k \mid ...) \propto      
+	\begin{cases}
+	\frac{N_{k,-i}}{\alpha + N -1}\frac{\binom{\sum_{z_j=k} d_j}{\sum_{z_j=k} b_j}}{\binom{\sum_{z_j=k,j \neq i} d_j}{\sum_{z_j=k,j \neq i} b_j}} \frac{B(\sum_{z_j=k} b_j + 1 , \sum_{z_j=k} d_j - \sum_{z_j=k} b_j +1)}{B(\sum_{z_j=k,j \neq i} b_j + 1 , \sum_{z_j=k,j \neq i} d_j - \sum_{z_j=k,j \neq i} b_j +1)} ...\\ 
+	\text{ if k has been seen before}\\
+	\\
+	\\
+	\frac{\alpha}{\alpha + N -1} \binom{d_i}{ b_i} \frac{B(b_i + 1 , d_i - b_i +1)}{B(1,1)} ... \text{ if k is a new cluster}\\
+	\end{cases} $$
+
+	
+	
+	\subsection*{Question 17}
+	
+	Our experiments will be run on our implementation of data generator. 
+	
+	The process of generating data starts by running the stick-breaking method to determinate the probabilities of picking each individual cluster. Next we sample $k$ different $\phi^k$ parameters for each of the clusters, from a beta distribution with parameters $a=1$ and $b=1$.
+	We will use the sampled $\phi^k$ as probabilities of an action happening in the binomial distribution.
+	
+	When we want to sample our PyLight model for $N$ samples, we first decide what will be the cluster from which the data point will come. Then we generate the maximal number of trials for each sample, $d_i$ and finally sample our data point from a binomial distribution with parameters $d_i$ and $\phi^{z_i}$ where $z_i$ is the index of the cluster from which this data will be generated.  
+	
+	The next plot shows the placement of data points in the $b_i$, $d_i$ space colored by the true cluster.
+	
+	\begin{center}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/data_plot.png}
+				
+	\end{center}
+	
+	We draw $1000$ samples from the Gibbs sampler. The resulting Rand index and Mutual information plots suggest that the algorithm wasn't succesful in finding the right clusters for this model.
+	
+	\begin{center}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/rand_index.png}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/mutual_information.png}
+		
+	\end{center}	
+	
+	Further investigation shows that the number of cluster is decreasing over time, but at some point it stops in a local optima. Next plot shows the probabilities of a data point belonging to a specific cluster
+	
+	\begin{center}	
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/sample_prob_0.png}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/sample_prob_18.png}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/sample_prob_42.png}
+		
+		\includegraphics[width=.6\textwidth]{task6/figures/T_3_1/Q2/sample_prob_64.png}
+		
+
+	\end{center}	
+	
+	
+	Possible improvements could be made by making a better initialization rather then assigning a specific cluster to each point.
+	
+	\newpage
+	
+	
 	\section*{3.2 Predicting a relation based on Indian Buffet Process}
 	Let us suppose that we observe the interactions between a set of entities and we wish to extract informative representations that are useful for making predictions about the entities and their relationships. One basic challenge is link prediction, where we observe the relationships (or “links”) between some pairs of entities in a network (or “graph”) and we try to predict unobserved links. 
 	
@@ -1210,6 +1367,8 @@
 		\item resample $Z$, given $W$;
 		\item resample $W$, given $Z$.
 	\end{enumerate}
+
+	\textbf{Code path} : ./Codes/task3.2
 	
 	\subsection*{Question 19}
 	In the algorithm implementation that we provide, at first we create a binary feature matrix $Z$, using the Indian Buffet Process. As previously mentioned, The first customer chooses a $Poisson(\alpha)$ number of dishes to sample. Then, for each custumer $i$ we perform the following steps:
